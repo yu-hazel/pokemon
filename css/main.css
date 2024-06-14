@@ -11,7 +11,7 @@
     /* outline: 1px solid rgb(255, 210, 230); */
 }
 :root {
-    font-family:'DungGeunMo';
+    font-family: 'DungGeunMo';
 }
 header {
     display: flex;
@@ -28,7 +28,7 @@ header {
     align-items: center;
 }
 .mainSec {
-        gap: 60px;
+    gap: 60px;
 }
 h2 {
     font-size: 40px;
@@ -46,7 +46,7 @@ h2 {
     justify-content: space-between;
     background-color: #fff;
     color: #000;
-    border-radius: 0 0 300% 0 ;
+    border-radius: 0 0 300% 0;
     position: absolute;
     width: 340px;
     height: 500px;
@@ -183,24 +183,78 @@ button {
     cursor: pointer;
     transition: 0.3s;
 }
-.normal { border: 2px solid #605A4E; background: #ADA595; }
-.fighting { border: 2px solid #7B0E09; background: #C02F28; }
-.poison { border: 2px solid #AF8BB1; background: #853C89; }
-.ground { border: 2px solid #875011; background: #CB985D; }
-.flying { border: 2px solid #4F67CD; background: #9AABF2; }
-.bug { border: 2px solid #758108; background: #9FAE1A; }
-.rock { border: 2px solid #DEBC55; background: #9D853C; }
-.water { border: 2px solid #166FDD; background: #669FE6; }
-.steel { border: 2px solid #5F5D7A; background: #9D9CAD; }
-.ghost { border: 2px solid #493564; background: #887A9A; }
-.fire { border: 2px solid #B84D12; background: #F26E25; }
-.electric { border: 2px solid #BA8400; background: #FEB912; }
-.grass { border: 2px solid #3A8B0D; background: #54B81C; }
-.ice { border: 2px solid #11A7D9; background: #7BDAFA; }
-.psychic { border: 2px solid #BC1B4C; background: #EA5381; }
-.dragon { border: 2px solid #A598E2; background: #573FC6; }
-.dark { border: 2px solid #919191; background: #403C38; }
-.fairy { border: 2px solid #C96ACA; background: #EBA4EC; }
+.normal {
+    border: 2px solid #605A4E;
+    background: #ADA595;
+}
+.fighting {
+    border: 2px solid #7B0E09;
+    background: #C02F28;
+}
+.poison {
+    border: 2px solid #AF8BB1;
+    background: #853C89;
+}
+.ground {
+    border: 2px solid #875011;
+    background: #CB985D;
+}
+.flying {
+    border: 2px solid #4F67CD;
+    background: #9AABF2;
+}
+.bug {
+    border: 2px solid #758108;
+    background: #9FAE1A;
+}
+.rock {
+    border: 2px solid #DEBC55;
+    background: #9D853C;
+}
+.water {
+    border: 2px solid #166FDD;
+    background: #669FE6;
+}
+.steel {
+    border: 2px solid #5F5D7A;
+    background: #9D9CAD;
+}
+.ghost {
+    border: 2px solid #493564;
+    background: #887A9A;
+}
+.fire {
+    border: 2px solid #B84D12;
+    background: #F26E25;
+}
+.electric {
+    border: 2px solid #BA8400;
+    background: #FEB912;
+}
+.grass {
+    border: 2px solid #3A8B0D;
+    background: #54B81C;
+}
+.ice {
+    border: 2px solid #11A7D9;
+    background: #7BDAFA;
+}
+.psychic {
+    border: 2px solid #BC1B4C;
+    background: #EA5381;
+}
+.dragon {
+    border: 2px solid #A598E2;
+    background: #573FC6;
+}
+.dark {
+    border: 2px solid #919191;
+    background: #403C38;
+}
+.fairy {
+    border: 2px solid #C96ACA;
+    background: #EBA4EC;
+}
 .typeGroup p:hover {
     opacity: 0.6;
 }
@@ -230,10 +284,18 @@ button {
     background-color: #EDF9ED;
     box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.25);
 }
-.cardOne:nth-of-type(2) {background-color: #FFFEF2;}
-.cardOne:nth-of-type(3) {background-color: #FFEEE0;}
-.cardOne:nth-of-type(4) {background-color: #FFEFF4;}
-.cardOne:nth-of-type(5) {background-color: #E7EFF9;}
+.cardOne:nth-of-type(1n) {
+    background-color: #FFFEF2;
+}
+.cardOne:nth-of-type(2n) {
+    background-color: #FFEEE0;
+}
+.cardOne:nth-of-type(3n) {
+    background-color: #FFEFF4;
+}
+.cardOne:nth-of-type(4n) {
+    background-color: #E7EFF9;
+}
 /* .cardOne:nth-of-type(6) {background-color: #FFFEF2;} */
 
 .cardOne span:first-of-type {
@@ -253,7 +315,7 @@ button {
     align-items: center;
     gap: 20px;
 }
-.typeWrap p {
+.typeWrap > p {
     display: flex;
     padding: 5px 25px;
     justify-content: center;
@@ -263,5 +325,17 @@ button {
     cursor: pointer;
     transition: 0.3s;
 }
-.grass1 { border: 2px solid #3A8B0D; background: #54B81C; }
-.flying1 { border: 2px solid #4F67CD; background: #9AABF2; }
+/* 임시 - 나중에 속성별로 색상 변경 예정 */
+.typeWrap > p {
+    background-color: #fff;
+    border: 2px solid #8ac9f9;
+    color: #8ac9f9;
+}
+.grass1 {
+    border: 2px solid #3A8B0D;
+    background: #54B81C;
+}
+.flying1 {
+    border: 2px solid #4F67CD;
+    background: #9AABF2;
+}
