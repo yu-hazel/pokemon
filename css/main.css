@@ -19,7 +19,11 @@ header {
     align-items: center;
     padding: 10px 50px;
     background-color: #FDA7A7;
+    position: sticky;
+    top: 0px;
+    z-index: 2000;
 }
+
 .mainSec,
 .mainSec > div {
     display: flex;
@@ -107,13 +111,13 @@ h2 {
 #lightDarkToggle {
     width: 75px;
     height: 42px;
-    background: url(/pokemon/html/llight_mode.png) no-repeat;
+    background: url(/pokemon/img/llight_mode.png) no-repeat;
     background-size: cover;
     text-indent: -9999px;
     cursor: pointer;
 }
 #lightDarkToggle.dark {
-    background: url(/pokemon/html/dark_mode.png) no-repeat;
+    background: url(/pokemon/img/dark_mode.png) no-repeat;
     border: none;
 }
 .searchBar {
@@ -134,7 +138,7 @@ h2 {
     /* margin-bottom: 60px; */
 }
 button {
-    background: url(/pokemon/html/search_icon.png) no-repeat;
+    background: url(/pokemon/img/search_icon.png) no-repeat;
     width: 24px;
     height: 24px;
     text-indent: -9999px;
@@ -282,29 +286,132 @@ button {
     gap: 15px;
     border-radius: 30px;
     background-color: #EDF9ED;
-    box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease;
+    /* transition: boxshadow 0.3s ease; */
 }
-.cardOne:nth-of-type(1n) {
-    background-color: #FFFEF2;
+.cardOne:hover {
+    transform: scale(1.05);
+    box-shadow: 4px 4px 15px 0px rgba(0, 0, 0, 0.25);
 }
-.cardOne:nth-of-type(2n) {
-    background-color: #FFEEE0;
+
+.cardOne:has(.normal:first-child) {
+    background: #E7E7E7;
 }
-.cardOne:nth-of-type(3n) {
-    background-color: #FFEFF4;
+.cardOne:has(.fighting:first-child) {
+    background: #F2B6B6;
 }
-.cardOne:nth-of-type(4n) {
-    background-color: #E7EFF9;
+.cardOne:has(.poison:first-child) {
+    background: #E7D0F0;
 }
-/* .cardOne:nth-of-type(6) {background-color: #FFFEF2;} */
+.cardOne:has(.ground:first-child) {
+    background: #F2D7AE;
+}
+.cardOne:has(.flying:first-child) {
+    background: #D0E3FF;
+}
+.cardOne:has(.bug:first-child) {
+    background: #E6F2CE;
+}
+.cardOne:has(.rock:first-child) {
+    background: #F2E0BB;
+}
+.cardOne:has(.water:first-child) {
+    background: #D0E3FF;
+}
+.cardOne:has(.steel:first-child) {
+    background: #E2E2F2;
+}
+.cardOne:has(.ghost:first-child) {
+    background: #E0D0E7;
+}
+.cardOne:has(.fire:first-child) {
+    background: #F2C6A2;
+}
+.cardOne:has(.electric:first-child) {
+    background: #F2E3C1;
+}
+.cardOne:has(.grass:first-child) {
+    background: #D6F2C1;
+}
+.cardOne:has(.ice:first-child) {
+    background: #C1F2F2;
+}
+.cardOne:has(.psychic:first-child) {
+    background: #F2C1D3;
+}
+.cardOne:has(.dragon:first-child) {
+    background: #E3D0F2;
+}
+.cardOne:has(.dark:first-child) {
+    background: #D0D0D0;
+}
+.cardOne:has(.fairy:first-child) {
+    background: #F2E1F2;
+}
+
+/* 다크모드 */
+.cardOne:has(.normal:first-child).darkBtn {
+    background: #A1A1A1;
+}
+.cardOne:has(.fighting:first-child).darkBtn {
+    background: #B26767;
+}
+.cardOne:has(.poison:first-child).darkBtn {
+    background: #B39BBF;
+}
+.cardOne:has(.ground:first-child).darkBtn {
+    background: #BFA17B;
+}
+.cardOne:has(.flying:first-child).darkBtn {
+    background: #9CB2DF;
+}
+.cardOne:has(.bug:first-child).darkBtn {
+    background: #B4C39C;
+}
+.cardOne:has(.rock:first-child).darkBtn {
+    background: #BFAE85;
+}
+.cardOne:has(.water:first-child).darkBtn {
+    background: #9CB2DF;
+}
+.cardOne:has(.steel:first-child).darkBtn {
+    background: #A0A0B0;
+}
+.cardOne:has(.ghost:first-child).darkBtn {
+    background: #A396B0;
+}
+.cardOne:has(.fire:first-child).darkBtn {
+    background: #BF8A71;
+}
+.cardOne:has(.electric:first-child).darkBtn {
+    background: #BFA982;
+}
+.cardOne:has(.grass:first-child).darkBtn {
+    background: #A5BFA0;
+}
+.cardOne:has(.ice:first-child).darkBtn {
+    background: #84C0C0;
+}
+.cardOne:has(.psychic:first-child).darkBtn {
+    background: #BF8A97;
+}
+.cardOne:has(.dragon:first-child).darkBtn {
+    background: #B8A0BF;
+}
+.cardOne:has(.dark:first-child).darkBtn {
+    background: #909090;
+}
+.cardOne:has(.fairy:first-child).darkBtn {
+    background: #BF9FBF;
+}
 
 .cardOne span:first-of-type {
     width: 100%;
     text-align: left;
 }
 .cardOne img {
-    width: 137px;
-    height: 137px;
+    width: 100px;
+    height: 100px;
 }
 .cardOne span:nth-of-type(2) {
     font-size: 24px;
@@ -324,18 +431,4 @@ button {
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
-}
-/* 임시 - 나중에 속성별로 색상 변경 예정 */
-.typeWrap > p {
-    background-color: #fff;
-    border: 2px solid #8ac9f9;
-    color: #8ac9f9;
-}
-.grass1 {
-    border: 2px solid #3A8B0D;
-    background: #54B81C;
-}
-.flying1 {
-    border: 2px solid #4F67CD;
-    background: #9AABF2;
 }
