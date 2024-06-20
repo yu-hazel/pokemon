@@ -74,6 +74,7 @@ h2 {
 .catMenu {
     display: flex;
     flex-direction: column;
+    width: 200px;
     gap: 30px;
     font-size: 32px;
     font-weight: 400;
@@ -87,9 +88,10 @@ h2 {
 }
 .userMenu p {
     display: flex;
-    gap: 5px;
     justify-content: flex-start;
     align-items: center;
+    gap: 5px;
+    width: 120px;
 }
 .userMenu p img {
     width: 30px;
@@ -137,7 +139,13 @@ h2 {
     /* color: #dbdbdb; */
     /* margin-bottom: 60px; */
 }
-button {
+#search::placeholder {
+    color: #9e9e9e;
+}
+#search.darkSearch::placeholder {
+    color: #fff;
+}
+#searchBt {
     background: url(/pokemon/img/search_icon.png) no-repeat;
     width: 24px;
     height: 24px;
@@ -350,6 +358,21 @@ button {
 }
 
 /* 다크모드 */
+body {
+    transition: 0.3s;
+}
+.darkMode {
+    background-color: #7E7E7E;
+    color: #fff;
+}
+.darkHeader {
+    background-color: #363636;
+}
+.darkSearch {
+    background-color: #363636;
+    color: #fff;
+}
+
 .cardOne:has(.normal:first-child).darkBtn {
     background: #A1A1A1;
 }
@@ -431,4 +454,25 @@ button {
     color: #fff;
     cursor: pointer;
     transition: 0.3s;
+}
+
+/* 스크롤 버튼 */
+#scrollUp {
+    position: fixed;
+    z-index: 20;
+    /* height: 50px;
+    width: 50px; */
+    font-size: 60px;
+    color: #FDA7A7;
+    bottom: 40px;
+    right: 40px;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.6;
+}
+#scrollUp:hover {
+    opacity: 1;
+}
+#scrollUp.darkMode {
+    color: #fff;
 }
