@@ -53,15 +53,18 @@ function elementDarkToggle() {
     document.querySelector('h2').classList.toggle('darkMode');
     document.querySelector('#search').classList.toggle('darkSearch');
     document.querySelector('.menu').classList.toggle('darkMode');
-    document.querySelector('.menu p').classList.toggle('darkMode');
+    const catMenuItems = document.querySelectorAll('.catMenu p');
+    catMenuItems.forEach(item => {
+        item.classList.toggle('darkMenuBtn');
+    });
     const userMenuItems = document.querySelectorAll('.userMenu p');
     userMenuItems.forEach(item => {
-        item.classList.toggle('darkMode');
+        item.classList.toggle('darkMenuBtn');
     });
     document.querySelector('header').classList.toggle('darkHeader');
+    document.getElementById('scrollUp').classList.toggle('darkScrollUp');
 
-    document.getElementById('scrollUp').classList.toggle('darkMode');
-    
+
     const langImg = document.getElementById('lang');
     const loginImg = document.getElementById('login');
 

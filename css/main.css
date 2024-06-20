@@ -365,6 +365,9 @@ body {
     background-color: #7E7E7E;
     color: #fff;
 }
+.darkMenuBtn {
+    color: #fff;
+}
 .darkHeader {
     background-color: #363636;
 }
@@ -473,6 +476,6 @@ body {
 #scrollUp:hover {
     opacity: 1;
 }
-#scrollUp.darkMode {
+#scrollUp.darkScrollUp {
     color: #fff;
 }
