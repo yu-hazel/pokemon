@@ -1,0 +1,91 @@
+@charset "UTF-8";
+/* 포켓몬 미니게임 */
+
+.mainSec > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 33px;
+}
+.gameSet {
+  display: flex;
+  gap: 10px;
+}
+.gameSetDark {
+  display: none;
+  gap: 10px;
+}
+.mainSec > .gameBoxSet {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+.gameCon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 17px;
+  padding: 33px 14px;
+  width: 348px;
+  height: 348px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+/* dark */
+.gameCon.gameBoxdark {
+  background: #cccccc;
+  color: #000000;
+}
+.gameCon:hover {
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+  transform: translateY(-10px);
+  cursor: pointer;
+}
+.gameCon > h3 {
+  font-size: 40px;
+  font-weight: 400;
+}
+.gameCon > h3 > span {
+  color: #E94242;
+  font-size: 44px;
+  font-weight: 400;
+}
+.gameCon > img {
+  height: 137px;
+}
+.gameCon > div {
+  color: #4F4F4F;
+  font-size: 28px;
+  font-weight: 400;
+}
+
+/* 푸터 */
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  height: 30px;
+  position: fixed;
+  bottom: 0;
+  background: #FDA7A7;
+  color: white;
+}
+footer > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 97px;
+  height: 25px;
+  border-radius: 42px;
+  transition: 0.3s;
+}
+footer > a > img {
+  width: 20px;
+}
+footer > a:hover {
+  background: rgba(242, 242, 242, 0.38);
+}

@@ -69,6 +69,8 @@ document.getElementById('lightDarkToggle').addEventListener('click', function ()
     toggleClass('.userMenu p', 'darkMenuBtn');
     toggleClass('header', 'darkHeader');
     toggleClass('#scrollUp', 'darkScrollUp');
+    toggleClass('#scrollUp', 'darkScrollUp');
+    toggleClass('footer', 'darkHeader');
 
     // 이미지 다크모드 토글
     toggleImage('lang', '/pokemon/img/lang.png', '/pokemon/img/lang_dark.png');
@@ -84,6 +86,8 @@ document.getElementById('lightDarkToggle').addEventListener('click', function ()
     // 카드 다크모드 토글
     toggleClass('.cardOne', 'darkBtn');
 });
+
+
 
 // 화면 최상단으로 스크롤
 function scrollToTop() {
