@@ -51,7 +51,7 @@ h1 {
     border-radius: 10px;
 }
 .card .front {
-    background: url('/ex/img/pokeCard.png') no-repeat center center;
+    background: url('/pokemon/img/pokeCard.png') no-repeat center center;
     background-size: cover;
     transform: rotateY(0deg);
 }
@@ -61,6 +61,7 @@ h1 {
     justify-content: center;
     align-items: center;
     transform: rotateY(180deg);
+    border: 5px solid #828282;
 }
 .card img {
     width: 100%;
