@@ -13,6 +13,12 @@
 :root {
     font-family: 'DungGeunMo';
 }
+a:link,
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -61,7 +67,7 @@ h2 {
     padding: 50px 0 100px 50px;
     box-shadow: 2.266px 3.021px 15.104px 0px rgba(0, 0, 0, 0.25);
     z-index: 0;
-    transition: 0.5s ease-in-out;
+    transition: left 0.5s ease-in-out;
     /* position: relative; */
 }
 .menu.on {
@@ -78,6 +84,9 @@ h2 {
     gap: 30px;
     font-size: 32px;
     font-weight: 400;
+}
+.catMenu a:hover {
+    color: #EC6666;
 }
 .userMenu {
     display: flex;
@@ -109,6 +118,10 @@ h2 {
     right: 30px;
     z-index: 10;
     cursor: pointer;
+}
+/* 몬스터볼 호버시 밝아지게 */
+#monsterBall:hover {
+    filter: saturate(2.0) brightness(1.2);
 }
 #lightDarkToggle {
     width: 75px;
@@ -364,6 +377,9 @@ body {
 .darkMode {
     background-color: #7E7E7E;
     color: #fff;
+}
+.darkMode .catMenu > a:hover {
+    color: #F44336
 }
 .darkMenuBtn {
     color: #fff;
