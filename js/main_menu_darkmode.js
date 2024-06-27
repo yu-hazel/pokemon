@@ -40,68 +40,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-//라이트, 다크모드 버튼 토글
-lightDarkToggle.addEventListener('click', function () {
-    this.classList.toggle('dark');
+// 다크모드 토글 리팩토링
+// 클래스 토글 함수
+function toggleClass(selector, className) {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach(element => {
+        element.classList.toggle(className);
+    });
 }
-);
 
-// 배경, 폰트 다크모드
-function elementDarkToggle() {
-    document.body.classList.toggle('darkMode');
-    document.querySelector('.typeTitle').classList.toggle('darkMode');
-    document.querySelector('h2').classList.toggle('darkMode');
-    document.querySelector('#search').classList.toggle('darkSearch');
-    document.querySelector('.menu').classList.toggle('darkMode');
-    const catMenuItems = document.querySelectorAll('.catMenu p');
-    catMenuItems.forEach(item => {
-        item.classList.toggle('darkMenuBtn');
-    });
-    const userMenuItems = document.querySelectorAll('.userMenu p');
-    userMenuItems.forEach(item => {
-        item.classList.toggle('darkMenuBtn');
-    });
-    document.querySelector('header').classList.toggle('darkHeader');
-    document.getElementById('scrollUp').classList.toggle('darkScrollUp');
+// 이미지 토글 함수
+function toggleImage(elementId, lightSrc, darkSrc) {
+    const img = document.getElementById(elementId);
+    img.src = img.src.endsWith(lightSrc) ? darkSrc : lightSrc;
+}
 
+// 라이트, 다크모드 버튼 토글
+document.getElementById('lightDarkToggle').addEventListener('click', function () {
+    this.classList.toggle('dark');
 
-    const langImg = document.getElementById('lang');
-    const loginImg = document.getElementById('login');
+    // 배경, 폰트 다크모드 토글
+    toggleClass('body', 'darkMode');
+    toggleClass('.typeTitle', 'darkMode');
+    toggleClass('h2', 'darkMode');
+    toggleClass('#search', 'darkSearch');
+    toggleClass('.menu', 'darkMode');
+    toggleClass('.catMenu p', 'darkMenuBtn');
+    toggleClass('.userMenu p', 'darkMenuBtn');
+    toggleClass('header', 'darkHeader');
+    toggleClass('#scrollUp', 'darkScrollUp');
 
-    if (langImg.src.endsWith('/pokemon/img/lang.png')) {
-        langImg.src = '/pokemon/img/lang_dark.png';
-    } else {
-        langImg.src = '/pokemon/img/lang.png';
-    }
+    // 이미지 다크모드 토글
+    toggleImage('lang', '/pokemon/img/lang.png', '/pokemon/img/lang_dark.png');
+    toggleImage('login', '/pokemon/img/login.png', '/pokemon/img/login_dark.png');
 
-    if (loginImg.src.endsWith('/pokemon/img/login.png')) {
-        loginImg.src = '/pokemon/img/login_dark.png';
-    } else {
-        loginImg.src = '/pokemon/img/login.png';
-    }
-
+    // 검색 버튼 이미지 토글
     const searchBt = document.getElementById('searchBt');
     const searchBtStyle = window.getComputedStyle(searchBt);
-    if (searchBtStyle.backgroundImage.includes('/pokemon/img/search_icon.png')) {
-        searchBt.style.backgroundImage = 'url("/pokemon/img/search_dark.png")';
-    } else {
-        searchBt.style.backgroundImage = 'url("/pokemon/img/search_icon.png")';
-    }
-}
+    searchBt.style.backgroundImage = searchBtStyle.backgroundImage.includes('/pokemon/img/search_icon.png')
+        ? 'url("/pokemon/img/search_dark.png")'
+        : 'url("/pokemon/img/search_icon.png")';
 
-document.getElementById('lightDarkToggle').addEventListener('click', elementDarkToggle);
-
-
-//카드 다크모드
-function cardOneDarkToggle() {
-    const cards = document.querySelectorAll('.cardOne');
-    cards.forEach(card => {
-        card.classList.toggle('darkBtn');
-    });
-}
-
-lightDarkToggle.addEventListener('click', cardOneDarkToggle);
-// lightDarkToggle.addEventListener('click', elementDarkToggle);
+    // 카드 다크모드 토글
+    toggleClass('.cardOne', 'darkBtn');
+});
 
 // 화면 최상단으로 스크롤
 function scrollToTop() {
