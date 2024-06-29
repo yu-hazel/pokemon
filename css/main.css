@@ -4,6 +4,9 @@
 @import url('https://webfontworld.github.io/DungGeunMo/DungGeunMo.css');
 /* 둥근모꼴 */
 
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+/* font-awsome v6.1.1 */
+
 * {
     padding: 0;
     margin: 0;
@@ -80,13 +83,18 @@ h2 {
 .catMenu {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 200px;
     gap: 30px;
     font-size: 32px;
     font-weight: 400;
 }
-.catMenu a:hover {
-    color: #EC6666;
+.catMenu a:hover::before {
+    content: '\f04b';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 18px;
+    padding-right: 10px;
 }
 .userMenu {
     display: flex;
@@ -377,9 +385,6 @@ body {
 .darkMode {
     background-color: #7E7E7E;
     color: #fff;
-}
-.darkMode .catMenu > a:hover {
-    color: #F44336
 }
 .darkMenuBtn {
     color: #fff;
