@@ -52,7 +52,7 @@ function toggleClass(selector, className) {
 // 이미지 토글 함수
 function toggleImage(elementId, lightSrc, darkSrc) {
     const img = document.getElementById(elementId);
-    img.src = img.src.endsWith(lightSrc) ? darkSrc : lightSrc;
+    img.src = img.src.includes(lightSrc) ? darkSrc : lightSrc;
 }
 
 // 라이트, 다크모드 버튼 토글
@@ -61,9 +61,9 @@ document.getElementById('lightDarkToggle').addEventListener('click', function ()
 
     // 타이핑 애니메이션 색상 변경
     const highlightWord = document.getElementById('highlightWord');
-    highlightWord.style.animation = 'blinkDark 0.75s step-end infinite';
-    const highlightWordAfter = highlightWord.querySelector('::after');
-    highlightWordAfter.style.animation = 'blinkDark 0.75s step-end infinite';
+    highlightWord.style.animation = document.body.classList.contains('darkMode')
+        ? 'blinkDark 0.75s step-end infinite'
+        : 'blink 0.75s step-end infinite';
 
     // 이미지 다크모드 토글
     toggleImage('lang', '/pokemon/img/lang.png', '/pokemon/img/lang_dark.png');
