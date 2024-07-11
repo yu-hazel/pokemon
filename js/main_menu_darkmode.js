@@ -57,20 +57,7 @@ function toggleImage(elementId, lightSrc, darkSrc) {
 
 // 라이트, 다크모드 버튼 토글
 document.getElementById('lightDarkToggle').addEventListener('click', function () {
-    this.classList.toggle('dark');
-
-    // 배경, 폰트 다크모드 토글
-    toggleClass('body', 'darkMode');
-    toggleClass('.typeTitle', 'darkMode');
-    toggleClass('h2', 'darkMode');
-    toggleClass('#search', 'darkSearch');
-    toggleClass('.menu', 'darkMode');
-    toggleClass('.catMenu p', 'darkMenuBtn');
-    toggleClass('.userMenu p', 'darkMenuBtn');
-    toggleClass('header', 'darkHeader');
-    toggleClass('#scrollUp', 'darkScrollUp');
-    toggleClass('#scrollUp', 'darkScrollUp');
-    toggleClass('footer', 'darkHeader');
+    document.body.classList.toggle('darkMode');
 
     // 이미지 다크모드 토글
     toggleImage('lang', '/pokemon/img/lang.png', '/pokemon/img/lang_dark.png');
