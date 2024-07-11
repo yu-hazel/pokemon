@@ -104,7 +104,16 @@ function resetBoard() {
 function showGameComplete() {
   const gameCompleteElement = document.querySelector(".gameComplete");
   gameCompleteElement.style.display = 'block';
+
+  // 배경 블러 처리
+  document.querySelector(".cardGrid").classList.add("blur");
 }
+
+// "다시 하기" 버튼 클릭 이벤트 리스너 수정
+document.querySelector(".restartButton").addEventListener("click", () => {
+  document.querySelector(".cardGrid").classList.remove("blur"); // 블러 제거
+  loadPokemons();
+});
 
 // "다시 하기" 버튼 클릭 이벤트 리스너 추가
 document.querySelector(".restartButton").addEventListener("click", () => {
