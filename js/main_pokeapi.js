@@ -121,6 +121,7 @@ function toggleDarkMode() {
 
 // 무한 스크롤 기능
 window.addEventListener('scroll', () => {
+  if (isLoading || document.getElementById('search').value.trim()) return; // 로딩 중이거나 검색 중이면 추가 로드 방지
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
     // 스크롤이 거의 끝에 도달했을 때 추가 포켓몬 로드
     loadPokemons();
@@ -219,6 +220,8 @@ async function handleSearch() {
   const query = document.getElementById('search').value.trim().toLowerCase();
   if (!query) {
     cardSec.innerHTML = ''; // 검색어가 없으면 화면을 비움
+    offset = 0; // 오프셋 초기화
+    loadedPokemonNames.clear(); // 로드된 포켓몬 초기화
     loadPokemons(); // 원래 로드 함수 호출
     return;
   }
@@ -226,33 +229,38 @@ async function handleSearch() {
   const matchedPokemons = allPokemonNames.filter(p => p.names.korean.toLowerCase().includes(query));
 
   cardSec.innerHTML = ''; // 기존 카드를 초기화
+  loadedPokemonNames.clear(); // 로드된 포켓몬 초기화
   for (let pokemon of matchedPokemons) {
     try {
       const details = await fetchPokemonDetails({ url: `https://pokeapi.co/api/v2/pokemon/${pokemon.names.english.toLowerCase()}` });
       const spriteUrl = details.sprites.front_default; // 기본 이미지 경로
 
-      const card = document.createElement('div');
-      card.className = 'cardOne';
-      card.dataset.types = details.types.map(typeInfo => typeInfo.type.name).join(' ');
-      card.dataset.englishName = details.name; // 영어 이름 데이터 속성에 저장
-      card.dataset.koreanName = pokemon.names.korean; // 한글 이름 데이터 속성에 저장
+      if (!loadedPokemonNames.has(details.name)) {
+        const card = document.createElement('div');
+        card.className = 'cardOne';
+        card.dataset.types = details.types.map(typeInfo => typeInfo.type.name).join(' ');
+        card.dataset.englishName = details.name; // 영어 이름 데이터 속성에 저장
+        card.dataset.koreanName = pokemon.names.korean; // 한글 이름 데이터 속성에 저장
 
-      const cardHTML = `
-        <span>no.${details.id}</span>
-        <img src="${spriteUrl}" alt="${pokemon.names.korean}">
-        <span>${pokemon.names.korean}</span>
-        <div class="typeWrap">
-          ${details.types.map(typeInfo => `<p class="${typeInfo.type.name}">${typeTranslations[typeInfo.type.name]}</p>`).join('')}
-        </div>
-      `;
+        const cardHTML = `
+          <span>no.${details.id}</span>
+          <img src="${spriteUrl}" alt="${pokemon.names.korean}">
+          <span>${pokemon.names.korean}</span>
+          <div class="typeWrap">
+            ${details.types.map(typeInfo => `<p class="${typeInfo.type.name}">${typeTranslations[typeInfo.type.name]}</p>`).join('')}
+          </div>
+        `;
 
-      card.innerHTML = cardHTML;
+        card.innerHTML = cardHTML;
 
-      // 타입에 맞는 배경색 설정
-      setCardBackgroundColor(card);
+        // 타입에 맞는 배경색 설정
+        setCardBackgroundColor(card);
 
-      cardSec.appendChild(card);
+        cardSec.appendChild(card);
 
+        // 로드된 포켓몬 이름을 집합에 추가
+        loadedPokemonNames.add(details.name);
+      }
     } catch (error) {
       console.error(`Error fetching data for ${pokemon.names.korean}:`, error);
     }
