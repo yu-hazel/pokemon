@@ -424,11 +424,17 @@ body.darkMode #lightDarkToggle {
 
 /* 다크모드 */
 body.darkMode,
-body.darkMode .menu,
 body.darkMode .typeTitle {
     transition: 0.3s;
-    background-color: #7E7E7E;
+    background-color: #313131;
     color: #fff;
+}
+body.darkMode .menu {
+    background-color: #424242;
+    color: #fff;
+}
+body.darkMode #search {
+    box-shadow: 0px 8px 20px 0px rgba(36, 36, 36, 0.25);
 }
 
 body.darkMode header,
