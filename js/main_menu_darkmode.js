@@ -61,9 +61,11 @@ document.getElementById('lightDarkToggle').addEventListener('click', function ()
 
     // 타이핑 애니메이션 색상 변경
     const highlightWord = document.getElementById('highlightWord');
-    highlightWord.style.animation = document.body.classList.contains('darkMode')
-        ? 'blinkDark 0.75s step-end infinite'
-        : 'blink 0.75s step-end infinite';
+    if (highlightWord) {
+        highlightWord.style.animation = document.body.classList.contains('darkMode')
+            ? 'blinkDark 0.75s step-end infinite'
+            : 'blink 0.75s step-end infinite';
+    }
 
     // 이미지 다크모드 토글
     toggleImage('lang', '/pokemon/img/lang.png', '/pokemon/img/lang_dark.png');
@@ -71,16 +73,15 @@ document.getElementById('lightDarkToggle').addEventListener('click', function ()
 
     // 검색 버튼 이미지 토글
     const searchBt = document.getElementById('searchBt');
-    const searchBtStyle = window.getComputedStyle(searchBt);
-    searchBt.style.backgroundImage = searchBtStyle.backgroundImage.includes('/pokemon/img/search_icon.png')
-        ? 'url("/pokemon/img/search_dark.png")'
-        : 'url("/pokemon/img/search_icon.png")';
-
+    if (searchBt) {
+        const searchBtStyle = window.getComputedStyle(searchBt);
+        searchBt.style.backgroundImage = searchBtStyle.backgroundImage.includes('/pokemon/img/search_icon.png')
+            ? 'url("/pokemon/img/search_dark.png")'
+            : 'url("/pokemon/img/search_icon.png")';
+    }
     // 카드 다크모드 토글
     toggleClass('.cardOne', 'darkBtn');
 });
-
-
 
 // 화면 최상단으로 스크롤
 function scrollToTop() {
@@ -91,4 +92,8 @@ function scrollToTop() {
 }
 
 // 페이지 최상단으로 이동하는 버튼에 클릭 이벤트를 추가
-document.querySelector('.fa-circle-arrow-up').addEventListener('click', scrollToTop);
+//버튼이 있으면 추가
+const scrollToTopBt = document.querySelector('.fa-circle-arrow-up');
+if (scrollToTopBt) {
+    scrollToTopBt.addEventListener('click', scrollToTop);
+}
