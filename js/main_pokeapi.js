@@ -48,7 +48,10 @@ async function loadPokemons() {
   loadingScreen.style.display = 'flex'; // 로딩 화면 표시
   document.body.style.overflow = 'hidden'; // 스크롤 막기
   const pokemons = await fetchPokemons(offset, limit, currentFilter);
+  // console.log(`pokemons: ${JSON.stringify(pokemons)}`); // 객체를 JSON 문자열로 변환하여 출력
+
   for (let pokemon of pokemons) {
+    // console.log(`pokemon: ${JSON.stringify(pokemon)}`); // 객체를 JSON 문자열로 변환하여 출력
     if (!loadedPokemonNames.has(pokemon.name)) { // 중복 확인
       try {
         const details = await fetchPokemonDetails(pokemon);
@@ -156,6 +159,47 @@ document.querySelectorAll('.typeGroup p').forEach(element => {
 
 // 다크 모드 토글 버튼 이벤트 추가
 document.getElementById('lightDarkToggle').addEventListener('click', toggleDarkMode);
+
+
+
+// JSON 파일 가져오기
+async function loadPokemonNames() {
+  try {
+    const response = await fetch('/pokemon/html/poke_name_lang.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const pokemonNames = await response.json();
+    // console.log('Pokemon names loaded:', pokemonNames); // 로드된 JSON 데이터 확인
+    return pokemonNames;
+  } catch (error) {
+    console.error('Failed to load pokemon names:', error);
+    return [];
+  }
+};
+
+// 검색어와 일치하는 포켓몬의 영어 이름을 콘솔에 출력하는 함수
+function searchByKeyword(keyword, pokemonNames) {
+  const matchedPokemon = pokemonNames.find(p => p.names.korean === keyword);
+  if (matchedPokemon) {
+    console.log('Matched Pokemon English name:', matchedPokemon.names.english);
+  } else {
+    console.log('포켓몬을 찾을 수 없습니다.');
+  }
+}
+
+// 검색 input 이벤트 추가
+document.getElementById('search').addEventListener('keydown', async (event) => {
+  if (event.key === 'Enter') {
+    const searchValue = event.target.value.trim();
+    if (searchValue) {
+      const pokemonNames = await loadPokemonNames();
+      searchByKeyword(searchValue, pokemonNames);
+    }
+  }
+});
+
+
 
 // 초기 로드
 loadPokemons();
