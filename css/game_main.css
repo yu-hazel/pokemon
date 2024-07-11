@@ -33,10 +33,11 @@
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 /* dark */
-.gameCon.gameBoxdark {
+body.darkMode .gameCon {
   background: #cccccc;
   color: #000000;
 }
+
 .gameCon:hover {
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
   transform: translateY(-10px);
@@ -58,34 +59,4 @@
   color: #4F4F4F;
   font-size: 28px;
   font-weight: 400;
-}
-
-/* 푸터 */
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  width: 100%;
-  height: 30px;
-  position: fixed;
-  bottom: 0;
-  background: #FDA7A7;
-  color: white;
-}
-footer > a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  width: 97px;
-  height: 25px;
-  border-radius: 42px;
-  transition: 0.3s;
-}
-footer > a > img {
-  width: 20px;
-}
-footer > a:hover {
-  background: rgba(242, 242, 242, 0.38);
 }

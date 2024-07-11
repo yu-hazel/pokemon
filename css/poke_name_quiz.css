@@ -17,20 +17,24 @@ h1 {
   font-size: 25px;
 }
 .container {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   background: white;
-  padding: 20px;
+  padding: 30px 50px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  gap: 20px;
 }
 #questionBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
   width: 100px;
   height: 100px;
-  padding: 30px 0;
 }
 #pokemonGif {
-  width: 100%;
   height: 100%;
   /* filter: brightness(0) grayscale(100%); */
 }
@@ -48,4 +52,10 @@ button {
 #score {
   margin-top: 20px;
   font-size: 18px;
+}
+
+/* dark */
+body.darkMode .container {
+  background: #cccccc;
+  color: #000000;
 }

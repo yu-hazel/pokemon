@@ -11,12 +11,3 @@ document.getElementById('lightDarkToggle').addEventListener('click', function ()
     gameSetDark.style.display = 'flex';
   }
 });
-
-//버튼 클릭시 .gameCon 클래스에 .dark 토글
-document.getElementById('lightDarkToggle').addEventListener('click', function () {
-  const gameCons = document.querySelectorAll('.gameCon');
-  //for of반복문으로 토글
-  for (const gameCon of gameCons) {
-    gameCon.classList.toggle('gameBoxdark');
-  }
-});

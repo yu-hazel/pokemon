@@ -5,10 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>포켓몬 카드 짝 맞추기 게임</title>
+    <link rel="stylesheet" href="/pokemon/css/main.css">
     <link rel="stylesheet" href="/pokemon/css/poke_card.css">
+    <link rel="stylesheet" href="/pokemon/css/poke_footer.css">
 </head>
 
 <body>
+    <header>
+        <img id="menuBt" src="/pokemon/img/pika.png" alt>
+        <div class="menu">
+            <div class="catMenu">
+                <a href="/pokemon/html/pokemon_main.html">도감</a>
+                <a href="/pokemon/html/pokemon_game_main.html">미니게임</a>
+            </div>
+            <div class="userMenu">
+                <p><img src="/pokemon/img/lang.png" alt id="lang">한국어</p>
+                <p><img src="/pokemon/img/login.png" alt id="login">로그인</p>
+            </div>
+            <img id="monsterBall" src="/pokemon/img/monster_ball.png" alt>
+        </div>
+        <div id="lightDarkToggle">light, dark mode toggle</div>
+    </header>
     <div class="gameContainer">
         <h1>포켓몬 카드 짝 맞추기 게임</h1>
         <div class="cardGrid"></div>
@@ -17,6 +34,18 @@
             <button class="restartButton">다시 하기</button>
         </div>
     </div>
+    <footer>
+        <a href="https://github.com/yoo-nji">
+            <img src="/pokemon/img/footer_git.png" alt="github">
+            <span>yoonji</span>
+        </a>
+        <a href="https://github.com/yu-hazel">
+            <img src="/pokemon/img/footer_git.png" alt="github">
+            <span>hyein</span>
+        </a>
+    </footer>
+    <script src="/pokemon/js/main_menu_darkmode.js"></script>
+    <!-- 다크모드 -->
     <script src="/pokemon/js/poke_card.js"></script>
 </body>
 
