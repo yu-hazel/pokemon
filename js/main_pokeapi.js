@@ -162,7 +162,45 @@ document.getElementById('lightDarkToggle').addEventListener('click', toggleDarkM
 
 
 
-// JSON 파일 가져오기
+// // JSON 파일 가져오기
+// async function loadPokemonNames() {
+//   try {
+//     const response = await fetch('/pokemon/html/poke_name_lang.json');
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+//     const pokemonNames = await response.json();
+//     // console.log('Pokemon names loaded:', pokemonNames); // 로드된 JSON 데이터 확인
+//     return pokemonNames;
+//   } catch (error) {
+//     console.error('Failed to load pokemon names:', error);
+//     return [];
+//   }
+// };
+
+// // 검색어와 일치하는 포켓몬의 영어 이름을 콘솔에 출력하는 함수
+// function searchByKeyword(keyword, pokemonNames) {
+//   const matchedPokemon = pokemonNames.find(p => p.names.korean === keyword);
+//   if (matchedPokemon) {
+//     console.log('Matched Pokemon English name:', matchedPokemon.names.english);
+//   } else {
+//     console.log('포켓몬을 찾을 수 없습니다.');
+//   }
+// }
+
+// // 검색 input 이벤트 추가
+// document.getElementById('search').addEventListener('keydown', async (event) => {
+//   if (event.key === 'Enter') {
+//     const searchValue = event.target.value.trim();
+//     if (searchValue) {
+//       const pokemonNames = await loadPokemonNames();
+//       searchByKeyword(searchValue, pokemonNames);
+//     }
+//   }
+// });
+
+let allPokemonNames = [];
+
 async function loadPokemonNames() {
   try {
     const response = await fetch('/pokemon/html/poke_name_lang.json');
@@ -170,36 +208,70 @@ async function loadPokemonNames() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const pokemonNames = await response.json();
-    // console.log('Pokemon names loaded:', pokemonNames); // 로드된 JSON 데이터 확인
-    return pokemonNames;
+    console.log('Pokemon names loaded:', pokemonNames); // 로드된 JSON 데이터 확인
+    allPokemonNames = pokemonNames; // 전역 변수에 저장
   } catch (error) {
     console.error('Failed to load pokemon names:', error);
-    return [];
-  }
-};
-
-// 검색어와 일치하는 포켓몬의 영어 이름을 콘솔에 출력하는 함수
-function searchByKeyword(keyword, pokemonNames) {
-  const matchedPokemon = pokemonNames.find(p => p.names.korean === keyword);
-  if (matchedPokemon) {
-    console.log('Matched Pokemon English name:', matchedPokemon.names.english);
-  } else {
-    console.log('포켓몬을 찾을 수 없습니다.');
   }
 }
 
-// 검색 input 이벤트 추가
-document.getElementById('search').addEventListener('keydown', async (event) => {
-  if (event.key === 'Enter') {
-    const searchValue = event.target.value.trim();
-    if (searchValue) {
-      const pokemonNames = await loadPokemonNames();
-      searchByKeyword(searchValue, pokemonNames);
+async function handleSearch() {
+  const query = document.getElementById('search').value.trim().toLowerCase();
+  if (!query) {
+    cardSec.innerHTML = ''; // 검색어가 없으면 화면을 비움
+    loadPokemons(); // 원래 로드 함수 호출
+    return;
+  }
+
+  const matchedPokemons = allPokemonNames.filter(p => p.names.korean.toLowerCase().includes(query));
+
+  cardSec.innerHTML = ''; // 기존 카드를 초기화
+  for (let pokemon of matchedPokemons) {
+    try {
+      const details = await fetchPokemonDetails({ url: `https://pokeapi.co/api/v2/pokemon/${pokemon.names.english.toLowerCase()}` });
+      const spriteUrl = details.sprites.front_default; // 기본 이미지 경로
+
+      const card = document.createElement('div');
+      card.className = 'cardOne';
+      card.dataset.types = details.types.map(typeInfo => typeInfo.type.name).join(' ');
+      card.dataset.englishName = details.name; // 영어 이름 데이터 속성에 저장
+      card.dataset.koreanName = pokemon.names.korean; // 한글 이름 데이터 속성에 저장
+
+      const cardHTML = `
+        <span>no.${details.id}</span>
+        <img src="${spriteUrl}" alt="${pokemon.names.korean}">
+        <span>${pokemon.names.korean}</span>
+        <div class="typeWrap">
+          ${details.types.map(typeInfo => `<p class="${typeInfo.type.name}">${typeTranslations[typeInfo.type.name]}</p>`).join('')}
+        </div>
+      `;
+
+      card.innerHTML = cardHTML;
+
+      // 타입에 맞는 배경색 설정
+      setCardBackgroundColor(card);
+
+      cardSec.appendChild(card);
+
+    } catch (error) {
+      console.error(`Error fetching data for ${pokemon.names.korean}:`, error);
     }
+  }
+}
+
+document.getElementById('searchBt').addEventListener('click', handleSearch);
+document.getElementById('search').addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    handleSearch();
   }
 });
 
+async function init() {
+  await loadPokemonNames(); // 포켓몬 이름 데이터를 먼저 로드
+  loadPokemons(); // 일반 포켓몬 데이터 로드
+}
 
+init();
 
 // 초기 로드
-loadPokemons();
+// loadPokemons();
