@@ -59,6 +59,12 @@ function toggleImage(elementId, lightSrc, darkSrc) {
 document.getElementById('lightDarkToggle').addEventListener('click', function () {
     document.body.classList.toggle('darkMode');
 
+    // 타이핑 애니메이션 색상 변경
+    const highlightWord = document.getElementById('highlightWord');
+    highlightWord.style.animation = 'blinkDark 0.75s step-end infinite';
+    const highlightWordAfter = highlightWord.querySelector('::after');
+    highlightWordAfter.style.animation = 'blinkDark 0.75s step-end infinite';
+
     // 이미지 다크모드 토글
     toggleImage('lang', '/pokemon/img/lang.png', '/pokemon/img/lang_dark.png');
     toggleImage('login', '/pokemon/img/login.png', '/pokemon/img/login_dark.png');

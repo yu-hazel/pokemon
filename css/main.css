@@ -7,6 +7,14 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
 /* font-awsome v6.1.1 */
 
+@font-face {
+    font-family: 'SangSangShinb7';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.1/SangSangShinb7.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* 신비는일곱살 */
+
 * {
     padding: 0;
     margin: 0;
@@ -31,6 +39,36 @@ header {
     position: sticky;
     top: 0px;
     z-index: 2000;
+}
+
+/* 메인 타이틀 타이핑 애니메이션 */
+@keyframes blink {
+    0%,
+    100% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #FDA7A7;
+    }
+}
+#highlightWord {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid;
+    animation: blink 0.75s step-end infinite;
+    vertical-align: bottom;
+    font-family: 'SangSangShinb7';
+    font-size: 42px;
+    line-height: 1;
+}
+#highlightWord::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 0.8em;
+    animation: blink 0.75s step-end infinite;
+    vertical-align: bottom;
 }
 
 .mainSec,
@@ -406,6 +444,17 @@ body.darkMode #scrollUp {
 
 body.darkMode .loading-screen {
     background: rgba(47, 47, 47, 0.8);
+}
+
+/* 다크모드 */
+@keyframes blinkDark {
+    0%,
+    100% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #ffffff;
+    }
 }
 
 .cardOne:has(.normal:first-child).darkBtn {
