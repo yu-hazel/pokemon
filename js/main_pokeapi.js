@@ -1,5 +1,6 @@
 import { typeColors, darkTypeColors } from '/pokemon/js/back_color.js';
 const $tooltip = document.querySelector(".tooltip");
+const $updateNotice = document.querySelector(".updateNotice");
 
 // 검색창에 마우스 오버하면 툴팁 block 
 const searchBar = document.querySelector('.searchBar');
@@ -8,6 +9,15 @@ searchBar.addEventListener('mouseover', () => {
 });
 searchBar.addEventListener('mouseout', () => {
   $tooltip.style.display = 'none';
+});
+
+// 검색창에 마우스 오버하면 툴팁 block 
+const langText = document.querySelector('.langText');
+langText.addEventListener('mouseover', () => {
+  $updateNotice.style.display = 'block';
+});
+langText.addEventListener('mouseout', () => {
+  $updateNotice.style.display = 'none';
 });
 
 let offset = 0; // 시작 오프셋

@@ -27,8 +27,20 @@
     border-radius: 20px;
     font-size: 12px;
 }
-.searchBar:hover .tooltip {
-    display: block;
+
+.updateNotice {
+    display: none;
+    position: absolute;
+    top: 54%;
+    left: 17px;
+    width: 200px;
+    line-height: 13px;
+    text-align: center;
+    color: #EC6666;
+    border: 1px solid #EC6666;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
 }
 
 * {
@@ -475,7 +487,7 @@ body.darkMode .loading-screen {
     background: rgba(47, 47, 47, 0.8);
 }
 
-body.darkMode .tooltip {
+body.darkMode .tooltip, body.darkMode .updateNotice {
     border: 1px solid #Fff;
     color: #fff;
 }
