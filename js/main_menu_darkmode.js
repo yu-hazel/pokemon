@@ -92,7 +92,7 @@ function scrollToTop() {
 }
 
 // 페이지 최상단으로 이동하는 버튼에 클릭 이벤트를 추가
-//버튼이 있으면 추가
+//버튼이 있으면, 조건 추가(버튼이 없는 페이지에서 경고문구 뜸)
 const scrollToTopBt = document.querySelector('.fa-circle-arrow-up');
 if (scrollToTopBt) {
     scrollToTopBt.addEventListener('click', scrollToTop);
