@@ -45,11 +45,22 @@ async function fetchPokemonDetails(pokemon) {
   return data;
 }
 
-// 포켓몬 한글 이름 가져오기
+// // 포켓몬 한글 이름 가져오기(수정)
+// async function fetchPokemonSpecies(pokemon) {
+//   const response = await fetch(pokemon.species.url);
+//   const data = await response.json();
+//   return data.names.find(name => name.language.name === 'ko').name;
+// }
+
+// 포켓몬 이름 가져오기 (한글, 영어, 일본어)
 async function fetchPokemonSpecies(pokemon) {
   const response = await fetch(pokemon.species.url);
   const data = await response.json();
-  return data.names.find(name => name.language.name === 'ko').name;
+  return {
+    korean: data.names.find(name => name.language.name === 'ko').name,
+    english: data.names.find(name => name.language.name === 'en').name,
+    japanese: data.names.find(name => name.language.name === 'ja').name
+  };
 }
 
 // 포켓몬 데이터 로드하고 화면에 표시
@@ -124,7 +135,7 @@ async function loadPokemons() {
     if (!loadedPokemonNames.has(pokemon.name)) { // 중복 확인
       try {
         const details = await fetchPokemonDetails(pokemon);
-        const koreanName = await fetchPokemonSpecies(details);
+        const names = await fetchPokemonSpecies(details);
 
         let spriteUrl = details.sprites.front_default;
         if (!spriteUrl) {
@@ -141,8 +152,10 @@ async function loadPokemons() {
 
         const cardHTML = `
           <span>no.${details.id}</span>
-          <img src="${spriteUrl}" alt="${koreanName}">
-          <span>${koreanName}</span>
+          <img src="${spriteUrl}" alt="${names.korean}">
+          <span>${names.korean}</span>
+          <span>${names.english}</span>
+          <span>${names.japanese}</span>
           <div class="typeWrap">
             ${details.types.map(typeInfo => `<p class="${typeInfo.type.name}">${typeTranslations[typeInfo.type.name]}</p>`).join('')}
           </div>
@@ -357,13 +370,17 @@ async function handleSearch() {
         const card = document.createElement('div');
         card.className = 'cardOne';
         card.dataset.types = details.types.map(typeInfo => typeInfo.type.name).join(' ');
-        card.dataset.englishName = details.name; // 영어 이름 데이터 속성에 저장
+        card.dataset.englishName = pokemon.names.english; // 영어 이름 데이터 속성에 저장
         card.dataset.koreanName = pokemon.names.korean; // 한글 이름 데이터 속성에 저장
+        card.dataset.japaneseName = pokemon.names.japanese; // 일본어 이름 데이터 속성에 저장
+
 
         const cardHTML = `
           <span>no.${details.id}</span>
           <img src="${spriteUrl}" alt="${pokemon.names.korean}">
           <span>${pokemon.names.korean}</span>
+         <span>${pokemon.names.english}</span>
+         <span>${pokemon.names.japanese}</span>
           <div class="typeWrap">
             ${details.types.map(typeInfo => `<p class="${typeInfo.type.name}">${typeTranslations[typeInfo.type.name]}</p>`).join('')}
           </div>
