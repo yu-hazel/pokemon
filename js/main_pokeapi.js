@@ -190,6 +190,7 @@ function filterByType(type) {
   cardSec.innerHTML = ''; // 기존 카드 초기화
   currentFilter = type; // 현재 필터 저장
   removeEndOfListMessage(); // 포켓몬 소환 완료 문구 제거
+  clearSearchResultCount(); // 검색 결과 건수 초기화
   loadPokemons(); // 새로운 데이터 로드
 }
 
@@ -309,6 +310,7 @@ async function handleSearch() {
   loadingScreen.style.display = 'flex'; // 로딩 화면 표시
   document.body.style.overflow = 'hidden'; // 스크롤 막기
   removeEndOfListMessage(); // 포켓몬 소환 완료 문구 제거
+  clearSearchResultCount(); // 검색 결과 건수 초기화
   const query = document.getElementById('search').value.trim().toLowerCase();
   if (!query) {
     cardSec.innerHTML = ''; // 검색어가 없으면 화면을 비움
@@ -337,6 +339,11 @@ async function handleSearch() {
   );
   //matchedPokemons 데이터 콘솔로 찍어보기
   // console.log('Matched Pokemons:', matchedPokemons);
+
+
+  // 검색 결과 건수 표시
+  searchResultCount.textContent = `총 ${matchedPokemons.length}마리의 포켓몬이 소환되었습니다.`;
+  //검색 결과 건수 표시 지우는 함수
 
 
   //일치하는 게 없을 경우
@@ -431,8 +438,14 @@ document.getElementById('search').addEventListener('keyup', (event) => {
   }
 });
 
+// 검색 결과 건수를 지우는 함수
+function clearSearchResultCount() {
+  searchResultCount.textContent = '';
+}
+
 async function init() {
   removeEndOfListMessage(); // 포켓몬 소환 완료 문구 제거
+  clearSearchResultCount(); // 검색 결과 건수 초기화
   await loadPokemonNames(); // 포켓몬 이름 데이터를 먼저 로드
   loadPokemons(); // 일반 포켓몬 데이터 로드
 }
