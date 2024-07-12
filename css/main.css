@@ -15,6 +15,22 @@
 }
 /* 신비는일곱살 폰트 */
 
+/* 툴팁 */
+.tooltip {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 20px;
+    color: #EC6666;
+    border: 1px solid #EC6666;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.searchBar:hover .tooltip {
+    display: block;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -220,6 +236,7 @@ body.darkMode #lightDarkToggle {
     right: 25px;
     top: 50%;
     transform: translateY(-50%);
+    cursor: pointer;
 }
 .type {
     display: flex;
@@ -344,9 +361,12 @@ body.darkMode #lightDarkToggle {
 .cardSec {
     display: flex;
     flex-wrap: wrap;
-    gap: 25px;
     justify-content: center;
+    gap: 25px;
     padding: 30px 0;
+}
+.searchEmpty {
+    font-size: 20px;
 }
 .cardOne {
     display: flex;
@@ -453,6 +473,11 @@ body.darkMode #scrollUp {
 
 body.darkMode .loading-screen {
     background: rgba(47, 47, 47, 0.8);
+}
+
+body.darkMode .tooltip {
+    border: 1px solid #Fff;
+    color: #fff;
 }
 
 /* 다크모드 */
@@ -586,4 +611,13 @@ body.darkMode .loading-screen {
 }
 iframe {
     border: none;
+}
+
+/* 데이터를 다 불러왔을 때 표시할 메시지 */
+.endOfListMessage {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+    height: 30px;
+    font-size: 20px;
 }
