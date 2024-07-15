@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/* 포켓몬 게임 xs 모바일 css */
+
+/* header {
+    width: 100vw;
+    padding: 10px 20px;
+} */
+.gameSet img {
+    width: 40px;
+    height: 40px;
+}
+.mainSec {
+    padding-bottom: 50px;
+}
+.mainSec > div:first-child {
+    gap: 0;
+}
+.mainSec > .gameBoxSet {
+    flex-direction: column;
+}
+.gameCon {
+    height: 250px;
+}
+.gameCon img {
+    height: 80px;
+}
+.gameCon > h3 {
+    font-size: 22px;
+}
+.gameCon > div { 
+    font-size: 24px;
+}

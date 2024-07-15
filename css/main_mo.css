@@ -1,0 +1,24 @@
+@charset "UTF-8";
+/* 포켓몬 메인 반응형 css */
+
+h2 {
+    font-size: 36px;
+}
+.type {
+    width: 80vw;
+    /* overflow-x: scroll; */
+}
+.typeGroup {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    justify-content: flex-start;
+    padding: 30px 20px;
+    gap: 15px;
+}
+.typeGroup p {
+    display: flex;
+    white-space: nowrap;
+}
+.menu {
+    left: -350px;
+}

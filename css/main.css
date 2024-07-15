@@ -211,6 +211,7 @@ h2 {
 body.darkMode #lightDarkToggle {
     background: url(/pokemon/img/dark_mode.png) no-repeat;
     border: none;
+    background-size: cover;
 }
 
 
