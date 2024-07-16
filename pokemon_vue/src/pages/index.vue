@@ -1,51 +1,61 @@
 <template>
-  <div class="mainSec">
-    <div>
-      <h2>우리만의 <span id="highlightWord"></span> 포켓몬 도감</h2>
-      <div class="searchBar">
-        <input type="text" placeholder="포켓몬을 검색해보세요!" id="search" />
-        <span class="tooltip">검색 가능한 언어: 한글, 영어, 일본어</span>
-        <button id="searchBt" @click="handleSearch">검색</button>
-      </div>
+  <div>
+    <div v-if="loadingScreen" class="loading-screen">
+      <iframe
+        src="https://lottie.host/embed/d9047134-fec7-4dec-bba1-a5daccfa345f/Nxtp4KlqIX.json"
+      ></iframe>
     </div>
-    <div>
-      <div class="type">
-        <p class="typeTitle">속성으로 찾아보기</p>
-        <div class="typeGroup">
-          <p class="normal">노말</p>
-          <p class="fighting">격투</p>
-          <p class="poison">독</p>
-          <p class="ground">땅</p>
-          <p class="flying">비행</p>
-          <p class="bug">벌레</p>
-          <p class="rock">바위</p>
-          <p class="water">물</p>
-          <p class="steel">강철</p>
-          <p class="ghost">고스트</p>
-          <p class="fire">불꽃</p>
-          <p class="electric">전기</p>
-          <p class="grass">풀</p>
-          <p class="ice">얼음</p>
-          <p class="psychic">에스퍼</p>
-          <p class="dragon">드래곤</p>
-          <p class="dark">악</p>
-          <p class="fairy">페어리</p>
+    <div class="mainSec" @scroll="handleScroll">
+      <div>
+        <h2>우리만의 <span id="highlightWord"></span> 포켓몬 도감</h2>
+        <div class="searchBar">
+          <input
+            type="text"
+            placeholder="포켓몬을 검색해보세요!"
+            id="search"
+            v-model="searchQuery"
+          />
+          <span class="tooltip">검색 가능한 언어: 한글, 영어, 일본어</span>
+          <button id="searchBt" @click="handleSearch">검색</button>
         </div>
       </div>
-      <div class="sort">번호순 (오름차순)</div>
-      <div id="searchResultCount"></div>
-      <div class="cardSec">
-        <div v-for="pokemon in pokemons" :key="pokemon.name" class="cardOne">
-          <span>no.{{ pokemon.id }}</span>
-          <img :src="pokemon.sprite" :alt="pokemon.names.korean" />
-          <span>{{ pokemon.names.korean }}</span>
-          <span>{{ pokemon.names.english }}</span>
-          <span>{{ pokemon.names.japanese }}</span>
-          <div class="typeWrap">
-            <p v-for="type in pokemon.types" :key="type" :class="type">
-              {{ typeTranslations[type] }}
+      <div>
+        <div class="type">
+          <p class="typeTitle">속성으로 찾아보기</p>
+          <div class="typeGroup">
+            <p
+              v-for="(translation, type) in typeTranslations"
+              :key="type"
+              :class="type"
+              @click="filterByType(type)"
+            >
+              {{ translation }}
             </p>
           </div>
+        </div>
+        <div class="sort">번호순 (오름차순)</div>
+        <div id="searchResultCount">{{ searchResultCount }}</div>
+        <div class="cardSec">
+          <div
+            v-for="pokemon in pokemons"
+            :key="pokemon.id"
+            class="cardOne"
+            :style="setCardBackgroundColor(pokemon)"
+          >
+            <span>no.{{ pokemon.id }}</span>
+            <img :src="pokemon.sprite" :alt="pokemon.names.korean" />
+            <span>{{ pokemon.names.korean }}</span>
+            <span>{{ pokemon.names.english }}</span>
+            <span>{{ pokemon.names.japanese }}</span>
+            <div class="typeWrap">
+              <p v-for="type in pokemon.types" :key="type" :class="type">
+                {{ typeTranslations[type] }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div v-if="endOfListMessage" class="endOfListMessage">
+          모든 포켓몬을 소환했습니다
         </div>
       </div>
     </div>
@@ -53,18 +63,30 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-// import { typeColors, darkTypeColors } from "/pokemon/js/back_color.js";
+import { typeColors, darkTypeColors } from "@/utils/back_color.js";
 
 // 상태 변수
-const searchQuery = ref("");
-const searchResultCount = ref("");
-const pokemons = ref([]);
-let offset = 0;
-const limit = 16;
-const loadedPokemonNames = new Set();
-const isLoading = ref(false);
-const currentFilter = ref("");
-const morePokemonsAvailable = ref(true);
+const searchQuery = ref(""); // 검색어
+const searchResultCount = ref(""); // 검색 결과 개수
+const pokemons = ref([]); // 로드된 포켓몬 목록
+let offset = 0; // 데이터 오프셋
+const limit = 16; // 한 번에 가져올 포켓몬 수
+const loadedPokemonNames = new Set(); // 이미 로드된 포켓몬 이름
+const isLoading = ref(false); // 로딩 상태
+const currentFilter = ref(""); // 현재 필터
+const morePokemonsAvailable = ref(true); // 더 많은 포켓몬이 있는지 확인
+const loadingScreen = ref(false); // 로딩 화면 상태
+const endOfListMessage = ref(false); // 목록 끝 메시지 상태
+
+// watch로 isLoading 상태 변화를 감지하여 스크롤 막기/활성화 처리
+watch(isLoading, (newValue) => {
+  const htmlElement = document.documentElement; // <html> 태그 선택
+  if (newValue) {
+    htmlElement.style.overflowY = "hidden"; // 스크롤 막기
+  } else {
+    htmlElement.style.overflowY = "auto"; // 스크롤 다시 활성화
+  }
+});
 
 // 타입 번역
 const typeTranslations = {
@@ -127,6 +149,7 @@ async function fetchPokemonSpecies(pokemon) {
 async function loadPokemons() {
   if (isLoading.value || !morePokemonsAvailable.value) return;
   isLoading.value = true;
+  loadingScreen.value = true; // 로딩 화면 표시
   const fetchedPokemons = await fetchPokemons(
     offset,
     limit,
@@ -137,6 +160,7 @@ async function loadPokemons() {
     morePokemonsAvailable.value = false;
     showEndOfListMessage();
     isLoading.value = false;
+    loadingScreen.value = false; // 로딩 화면 숨기기
     return;
   }
 
@@ -171,6 +195,7 @@ async function loadPokemons() {
 
   offset += limit;
   isLoading.value = false;
+  loadingScreen.value = false; // 로딩 화면 숨기기
 }
 
 // 검색 기능
@@ -178,6 +203,14 @@ function handleSearch() {
   const query = searchQuery.value.trim().toLowerCase();
   if (!query) return;
 
+  const languageType = getLanguageType(query);
+
+  if (languageType === "unknown") {
+    // 검색어 피드백 처리
+    return;
+  }
+
+  // 필터링된 포켓몬 목록을 로드
   const matchedPokemons = pokemons.value.filter(
     (pokemon) =>
       pokemon.names.korean.toLowerCase().includes(query) ||
@@ -223,19 +256,12 @@ function toggleDarkMode() {
 // 하단에 문구를 표시하는 함수
 function showEndOfListMessage() {
   removeEndOfListMessage();
-
-  const endOfListMessage = document.createElement("div");
-  endOfListMessage.className = "endOfListMessage";
-  endOfListMessage.textContent = "모든 포켓몬을 소환했습니다";
-  document.body.appendChild(endOfListMessage);
+  endOfListMessage.value = true;
 }
 
 // 하단 문구를 제거하는 함수
 function removeEndOfListMessage() {
-  const existingMessage = document.querySelector(".endOfListMessage");
-  if (existingMessage) {
-    existingMessage.remove();
-  }
+  endOfListMessage.value = false;
 }
 
 // 검색 결과 건수를 지우는 함수
@@ -243,8 +269,41 @@ function clearSearchResultCount() {
   searchResultCount.value = "";
 }
 
+// 무한 스크롤 처리 함수
+function handleScroll() {
+  const bottomOfWindow =
+    window.innerHeight + window.scrollY >=
+    document.documentElement.offsetHeight - 200;
+  if (bottomOfWindow && !isLoading.value && morePokemonsAvailable.value) {
+    loadPokemons();
+  }
+}
+//json 불러오기
+async function loadPokemonNames() {
+  const response = await fetch("@/assets/poke_details_data.json");
+  const pokemonNames = await response.json();
+  allPokemonNames.value = pokemonNames;
+}
+// 정규식 사용해서 언어 구분
+function getLanguageType(text) {
+  const koreanPattern = /[\u3131-\uD79D]/giu;
+  const japanesePattern = /[\u3040-\u30ff\u31f0-\u31ff\ufb00-\uff9f]/giu;
+  const englishPattern = /^[A-Za-z]+$/;
+
+  if (koreanPattern.test(text)) {
+    return "korean";
+  } else if (japanesePattern.test(text)) {
+    return "japanese";
+  } else if (englishPattern.test(text)) {
+    return "english";
+  } else {
+    return "unknown";
+  }
+}
+
 // 초기 포켓몬 데이터 로드
 onMounted(() => {
   loadPokemons();
+  window.addEventListener("scroll", handleScroll);
 });
 </script>

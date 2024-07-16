@@ -607,7 +607,16 @@ body.darkMode .tooltip, body.darkMode .updateNotice {
   color: #fff;
 }
 
-/* 로티파일 */
+/* 데이터를 다 불러왔을 때 표시할 메시지 */
+.endOfListMessage {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+  height: 30px;
+  font-size: 20px;
+}
+
+/* 로딩 */
 .loading-screen {
   position: fixed;
   top: 0;
@@ -619,17 +628,7 @@ body.darkMode .tooltip, body.darkMode .updateNotice {
   align-items: center;
   justify-content: center;
   z-index: 1999;
-  display: none;
 }
 iframe {
   border: none;
-}
-
-/* 데이터를 다 불러왔을 때 표시할 메시지 */
-.endOfListMessage {
-  display: flex;
-  justify-content: center;
-  margin: 50px 0;
-  height: 30px;
-  font-size: 20px;
 }
