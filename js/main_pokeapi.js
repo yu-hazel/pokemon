@@ -201,6 +201,7 @@ function filterByType(type) {
   currentFilter = type; // 현재 필터 저장
   removeEndOfListMessage(); // 포켓몬 소환 완료 문구 제거
   clearSearchResultCount(); // 검색 결과 건수 초기화
+  morePokemonsAvailable = true; // 새로운 필터 적용 시 더 많은 포켓몬이 있음을 설정
   loadPokemons(); // 새로운 데이터 로드
 }
 
@@ -321,6 +322,7 @@ async function handleSearch() {
   document.body.style.overflow = 'hidden'; // 스크롤 막기
   removeEndOfListMessage(); // 포켓몬 소환 완료 문구 제거
   clearSearchResultCount(); // 검색 결과 건수 초기화
+  morePokemonsAvailable = true; // 새로운 검색 시 더 많은 포켓몬이 있음을 설정
   const query = document.getElementById('search').value.trim().toLowerCase();
   if (!query) {
     cardSec.innerHTML = ''; // 검색어가 없으면 화면을 비움
