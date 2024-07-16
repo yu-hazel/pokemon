@@ -1,0 +1,45 @@
+@charset "UTF-8";
+/* 포켓몬 메인 xs 모바일 css */
+
+header {
+    width: 100vw;
+    padding: 10px 20px;
+}
+h2 {
+    font-size: 24px;
+}
+#search {
+    width: 70vw;    
+}
+input::placeholder {
+    font-size: 14px;
+}
+.typeGroup p {
+    font-size: 14px;
+    padding: 5px 15px;
+}
+.menu {
+    width: 250px;
+    padding-left: 30px;
+    top: 50px;
+}
+#monsterBall {
+    display: none;
+}
+.catMenu a {
+    font-size: 24px;
+}
+.userMenu p {
+    font-size: 18px;
+}
+.sort {
+    margin-top: 10px;
+}
+#menuBt {
+    width: 30px;
+}
+#lightDarkToggle {
+    width: 55px;
+    height: 30px;
+    background-size: cover;
+}

@@ -1,0 +1,12 @@
+@charset "UTF-8";
+/* 포켓몬 게임 반응형 css */
+
+.gameCon {
+    width: 250px;
+}
+.gameCon > h3 {
+    font-size: 24px;
+}
+.gameCon > h3 > span {
+    font-size: 26px;
+}

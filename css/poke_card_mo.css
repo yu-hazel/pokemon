@@ -1,0 +1,9 @@
+@charset "UTF-8";
+/* 포켓몬 카드게임 반응형 css */
+
+.gameContainer {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
