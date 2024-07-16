@@ -5,7 +5,8 @@
     width: 100vw;
     padding: 10px 20px;
 } */
-.gameSet img {
+.gameSet img,
+.gameSetDark img {
     width: 40px;
     height: 40px;
 }
