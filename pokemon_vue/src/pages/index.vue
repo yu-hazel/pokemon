@@ -7,15 +7,21 @@
     </div>
     <div class="mainSec" @scroll="handleScroll">
       <div>
-        <h2>우리만의 <span id="highlightWord"></span> 포켓몬 도감</h2>
+        <highlightWord />
         <div class="searchBar">
           <input
             type="text"
             placeholder="포켓몬을 검색해보세요!"
             id="search"
             v-model="searchQuery"
+            @keyup.enter="handleSearch"
+            @input="detectLanguage"
           />
-          <span class="tooltip">검색 가능한 언어: 한글, 영어, 일본어</span>
+          <span
+            class="tooltip"
+            :style="{ display: showTooltip ? 'block' : 'none' }"
+            >검색 가능한 언어: 한국어, 영어, 일본어</span
+          >
           <button id="searchBt" @click="handleSearch">검색</button>
         </div>
       </div>
@@ -36,22 +42,21 @@
         <div class="sort">번호순 (오름차순)</div>
         <div id="searchResultCount">{{ searchResultCount }}</div>
         <div class="cardSec">
-          <div
-            v-for="pokemon in pokemons"
-            :key="pokemon.id"
-            class="cardOne"
-            :style="setCardBackgroundColor(pokemon)"
-          >
-            <span>no.{{ pokemon.id }}</span>
-            <img :src="pokemon.sprite" :alt="pokemon.names.korean" />
-            <span>{{ pokemon.names.korean }}</span>
-            <span>{{ pokemon.names.english }}</span>
-            <span>{{ pokemon.names.japanese }}</span>
-            <div class="typeWrap">
-              <p v-for="type in pokemon.types" :key="type" :class="type">
-                {{ typeTranslations[type] }}
-              </p>
-            </div>
+          <div v-for="pokemon in pokemons" :key="pokemon.id">
+            <router-link :to="`/${pokemon.id}`">
+              <div class="cardOne" :style="setCardBackgroundColor(pokemon)">
+                <span>no.{{ pokemon.id }}</span>
+                <img :src="pokemon.sprite" :alt="pokemon.names.korean" />
+                <span>{{ pokemon.names.korean }}</span>
+                <span>{{ pokemon.names.english }}</span>
+                <span>{{ pokemon.names.japanese }}</span>
+                <div class="typeWrap">
+                  <p v-for="type in pokemon.types" :key="type" :class="type">
+                    {{ typeTranslations[type] }}
+                  </p>
+                </div>
+              </div>
+            </router-link>
           </div>
         </div>
         <div v-if="endOfListMessage" class="endOfListMessage">
@@ -64,6 +69,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { typeColors, darkTypeColors } from "@/utils/back_color.js";
+import highlightWord from "@/components/main_highlight_word.vue";
 
 // 상태 변수
 const searchQuery = ref(""); // 검색어
@@ -77,6 +83,25 @@ const currentFilter = ref(""); // 현재 필터
 const morePokemonsAvailable = ref(true); // 더 많은 포켓몬이 있는지 확인
 const loadingScreen = ref(false); // 로딩 화면 상태
 const endOfListMessage = ref(false); // 목록 끝 메시지 상태
+const showTooltip = ref(false); // 툴팁 표시 상태
+const isSearchMode = ref(false); // 검색 모드 상태
+let allPokemonNames = ref([]); // 모든 포켓몬 이름 데이터
+
+// 포켓몬 ID로 상세 정보 API 호출
+async function fetchPokemonDetailsById(id) {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  const data = await response.json();
+  return {
+    id: data.id,
+    sprite:
+      data.sprites.front_default ||
+      data.sprites.other["official-artwork"].front_default ||
+      "@/assets/img/silhouette.png",
+    types: data.types.map((typeInfo) => typeInfo.type.name),
+    height: data.height,
+    weight: data.weight,
+  };
+}
 
 // watch로 isLoading 상태 변화를 감지하여 스크롤 막기/활성화 처리
 watch(isLoading, (newValue) => {
@@ -147,25 +172,24 @@ async function fetchPokemonSpecies(pokemon) {
 
 // 포켓몬 데이터 로드하고 화면에 표시
 async function loadPokemons() {
-  if (isLoading.value || !morePokemonsAvailable.value) return;
-  isLoading.value = true;
+  if (isLoading.value || !morePokemonsAvailable.value) return; // 이미 로드 중이거나 더 이상 로드할 포켓몬이 없으면 중복 요청 방지
+  isLoading.value = true; // 로딩 시작
   loadingScreen.value = true; // 로딩 화면 표시
-  const fetchedPokemons = await fetchPokemons(
-    offset,
-    limit,
-    currentFilter.value
-  );
+  document.body.style.overflow = "hidden"; // 스크롤 막기
+  const pokemonsData = await fetchPokemons(offset, limit, currentFilter.value);
 
-  if (fetchedPokemons.length === 0) {
+  if (pokemonsData.length === 0) {
     morePokemonsAvailable.value = false;
     showEndOfListMessage();
     isLoading.value = false;
     loadingScreen.value = false; // 로딩 화면 숨기기
+    document.body.style.overflow = "auto"; // 스크롤 다시 활성화
     return;
   }
 
-  for (let pokemon of fetchedPokemons) {
+  for (let pokemon of pokemonsData) {
     if (!loadedPokemonNames.has(pokemon.name)) {
+      // 중복 확인
       try {
         const details = await fetchPokemonDetails(pokemon);
         const names = await fetchPokemonSpecies(details);
@@ -196,34 +220,51 @@ async function loadPokemons() {
   offset += limit;
   isLoading.value = false;
   loadingScreen.value = false; // 로딩 화면 숨기기
+  document.body.style.overflow = "auto"; // 스크롤 다시 활성화
 }
 
 // 검색 기능
-function handleSearch() {
+async function handleSearch() {
+  isSearchMode.value = true; // 검색 모드 활성화
   const query = searchQuery.value.trim().toLowerCase();
-  if (!query) return;
-
-  const languageType = getLanguageType(query);
-
-  if (languageType === "unknown") {
-    // 검색어 피드백 처리
+  currentFilter.value = ""; // 검색 시 필터 초기화
+  if (!query) {
+    showTooltip.value = false; // 검색창이 비어있을 때 툴팁 숨김
     return;
   }
 
-  // 필터링된 포켓몬 목록을 로드
-  const matchedPokemons = pokemons.value.filter(
-    (pokemon) =>
-      pokemon.names.korean.toLowerCase().includes(query) ||
+  const matchedPokemons = allPokemonNames.value.filter((pokemon) => {
+    return (
+      pokemon.names.korean.includes(query) ||
       pokemon.names.english.toLowerCase().includes(query) ||
-      pokemon.names.japanese.toLowerCase().includes(query)
-  );
+      pokemon.names.japanese.includes(query)
+    );
+  });
 
+  if (matchedPokemons.length === 0) {
+    searchResultCount.value = "일치하는 포켓몬이 없습니다.";
+    pokemons.value = [];
+    return;
+  }
+
+  // 포켓몬 상세 정보 API 호출
+  const promises = matchedPokemons.map(async (pokemon) => {
+    const details = await fetchPokemonDetailsById(pokemon.id);
+    return {
+      ...details,
+      names: pokemon.names,
+      descriptions: pokemon.descriptions,
+    };
+  });
+
+  // 포켓몬 데이터 업데이트
+  pokemons.value = await Promise.all(promises);
   searchResultCount.value = `총 ${matchedPokemons.length}마리의 포켓몬이 소환되었습니다.`;
-  pokemons.value = matchedPokemons;
 }
 
 // 필터링 기능
 function filterByType(type) {
+  isSearchMode.value = false; // 검색 모드 비활성화
   offset = 0;
   loadedPokemonNames.clear();
   pokemons.value = [];
@@ -271,6 +312,7 @@ function clearSearchResultCount() {
 
 // 무한 스크롤 처리 함수
 function handleScroll() {
+  if (isSearchMode.value) return; // 검색 모드일 때는 스크롤 로딩 중지
   const bottomOfWindow =
     window.innerHeight + window.scrollY >=
     document.documentElement.offsetHeight - 200;
@@ -280,17 +322,35 @@ function handleScroll() {
 }
 //json 불러오기
 async function loadPokemonNames() {
-  const response = await fetch("@/assets/poke_details_data.json");
+  const response = await fetch("/src/assets/poke_details_data.json");
   const pokemonNames = await response.json();
   allPokemonNames.value = pokemonNames;
+  // console.log("Loaded Pokemon Names:", allPokemonNames.value); // 콘솔에 로드된 데이터 출력
 }
+
+// 정규식 사용해서 언어 구분 및 콘솔 출력
+function detectLanguage() {
+  const query = searchQuery.value.trim();
+  if (!query) {
+    showTooltip.value = false;
+    return;
+  }
+  const language = getLanguageType(query);
+  console.log(`Detected language: ${language}`);
+  // 언어가 unknown이거나 query가 숫자일 경우 showTooltip을 true로 설정
+  showTooltip.value = language === "unknown" || language === "number";
+}
+
 // 정규식 사용해서 언어 구분
 function getLanguageType(text) {
   const koreanPattern = /[\u3131-\uD79D]/giu;
   const japanesePattern = /[\u3040-\u30ff\u31f0-\u31ff\ufb00-\uff9f]/giu;
   const englishPattern = /^[A-Za-z]+$/;
+  const numberPattern = /\d/;
 
-  if (koreanPattern.test(text)) {
+  if (numberPattern.test(text)) {
+    return "number";
+  } else if (koreanPattern.test(text)) {
     return "korean";
   } else if (japanesePattern.test(text)) {
     return "japanese";
@@ -303,6 +363,7 @@ function getLanguageType(text) {
 
 // 초기 포켓몬 데이터 로드
 onMounted(() => {
+  loadPokemonNames(); // JSON 데이터 로드
   loadPokemons();
   window.addEventListener("scroll", handleScroll);
 });
