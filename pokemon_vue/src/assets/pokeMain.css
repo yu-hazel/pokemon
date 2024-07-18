@@ -606,3 +606,68 @@ body.darkMode .tooltip, body.darkMode .updateNotice {
 iframe {
   border: none;
 }
+
+/* 반응형 헤더 */
+
+@media (max-width: 577px) {
+
+  h2 {
+    font-size: 24px;
+  }
+  #search {
+    width: 70vw;
+  }
+  #search::placeholder {
+    font-size: 14px;
+  }
+  .type {
+    width: 80vw;
+    /* overflow-x: scroll; */
+  }
+  
+  .typeGroup {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    justify-content: flex-start;
+    padding: 30px 20px;
+    gap: 15px;
+  }
+  .typeGroup p {
+    display: flex;
+    white-space: nowrap;
+  }
+  header {
+    width: 100vw;
+    padding: 10px 20px;
+  }
+  #lightDarkToggle,
+  body.darkMode #lightDarkToggle {
+    width: 55px;
+    height: 30px;
+    background-size: cover;
+  }
+  #menuBt {
+    width: 30px;
+    height: 30px;
+  }
+  .menu {
+    left: -350px;
+    width: 250px;
+    padding-left: 30px;
+    top: 50px;
+  }
+  .catMenu a {
+    font-size: 24px;
+  }
+  .userMenu p {
+    font-size: 18px;
+  }
+  #monsterBall {
+    display: none;
+  }
+  .gameSet img, .gameSetDark img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
