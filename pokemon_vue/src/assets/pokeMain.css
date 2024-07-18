@@ -27,9 +27,11 @@
   border-radius: 20px;
   font-size: 12px;
 }
-
+.langText, .login {
+  cursor: pointer;
+}
 .updateNotice {
-  display: none;
+  display: block;
   position: absolute;
   top: 54%;
   left: 17px;
@@ -70,35 +72,6 @@ header {
   z-index: 2000;
 }
 
-/* 메인 타이틀 타이핑 애니메이션 */
-@keyframes blink {
-  0%,
-  100% {
-    border-color: transparent;
-  }
-  50% {
-    border-color: #FDA7A7;
-  }
-}
-#highlightWord {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid;
-  animation: blink 0.75s step-end infinite;
-  vertical-align: bottom;
-  font-family: 'SangSangShinb7';
-  font-size: 42px;
-  line-height: 1;
-}
-#highlightWord::after {
-  content: '';
-  display: inline-block;
-  width: 2px;
-  height: 0.8em;
-  animation: blink 0.75s step-end infinite;
-  vertical-align: bottom;
-}
 .mainSec {
   padding-top: 62px;
 }
@@ -239,7 +212,7 @@ body.darkMode #lightDarkToggle {
   color: #fff;
 }
 #searchBt {
-  background: url(@/assets/img/search_icon.png) no-repeat;
+  background: url(/src/assets/img/search_icon.png) no-repeat;
   width: 24px;
   height: 24px;
   text-indent: -9999px;
@@ -457,7 +430,7 @@ body.darkMode #lightDarkToggle {
 /* 다크모드 */
 body.darkMode,
 body.darkMode .typeTitle {
-  transition: 0.3s;
+  /* transition: 0.3s; */
   background-color: #313131;
   color: #fff;
 }
@@ -467,10 +440,11 @@ body.darkMode .menu {
 }
 body.darkMode #search {
   box-shadow: 0px 8px 20px 0px rgba(36, 36, 36, 0.25);
+  background-color: #363636;
+  color: #fff;
 }
 
 body.darkMode header,
-body.darkMode #search,
 body.darkMode footer {
   background-color: #363636;
   color: #fff;
