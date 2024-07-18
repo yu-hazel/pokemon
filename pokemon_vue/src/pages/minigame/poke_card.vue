@@ -22,10 +22,108 @@
         <button class="restartButton" @click="restartGame">다시 하기</button>
       </div>
     </div>
+    <pokeFooter />
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from "vue";
+
+const pokemonData = ref([]);
+const firstCard = ref(null);
+const secondCard = ref(null);
+const lockBoard = ref(false);
+const matches = ref(0);
+const isGameComplete = ref(false);
+
+const loadPokemons = async () => {
+  const offset = Math.floor(Math.random() * 1000);
+  const response = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=10`
+  );
+  const data = await response.json();
+  const pokemons = data.results;
+
+  pokemonData.value = [...pokemons, ...pokemons].map((pokemon) => ({
+    ...pokemon,
+    id: Math.random(),
+    flipped: false,
+    matched: false,
+  }));
+
+  pokemonData.value.sort(() => Math.random() - 0.5);
+  matches.value = 0;
+  isGameComplete.value = false;
+};
+
+const getPokemonImageUrl = (url) => {
+  const parts = url.split("/");
+  const id = parts[parts.length - 2];
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+};
+
+const flipCard = (pokemon) => {
+  if (lockBoard.value) return;
+  if (firstCard.value && firstCard.value.id === pokemon.id) return;
+
+  pokemon.flipped = true;
+
+  if (!firstCard.value) {
+    firstCard.value = pokemon;
+    return;
+  }
+
+  secondCard.value = pokemon;
+  lockBoard.value = true;
+
+  checkForMatch();
+};
+
+const checkForMatch = () => {
+  const isMatch = firstCard.value.name === secondCard.value.name;
+
+  isMatch ? disableCards() : unflipCards();
+};
+
+const disableCards = () => {
+  firstCard.value.matched = true;
+  secondCard.value.matched = true;
+  resetBoard();
+  matches.value++;
+
+  if (matches.value === 10) {
+    setTimeout(showGameComplete, 500);
+  }
+};
+
+const unflipCards = () => {
+  setTimeout(() => {
+    firstCard.value.flipped = false;
+    secondCard.value.flipped = false;
+    resetBoard();
+  }, 1000);
+};
+
+const resetBoard = () => {
+  firstCard.value = null;
+  secondCard.value = null;
+  lockBoard.value = false;
+};
+
+const showGameComplete = () => {
+  isGameComplete.value = true;
+};
+
+const restartGame = () => {
+  window.location.reload();
+};
+
+onMounted(loadPokemons);
+
+
+</script>
+
+<!-- <script>
 import { ref, onMounted } from "vue";
 
 export default {
@@ -131,7 +229,7 @@ export default {
     };
   },
 };
-</script>
+</script> -->
 
 <style scoped>
 @import url("https://webfontworld.github.io/DungGeunMo/DungGeunMo.css");
@@ -159,6 +257,10 @@ h1 {
 }
 
 .gameContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   height: 100%;
   padding: 100px 0;
@@ -169,7 +271,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
-  margin-top: 20px;
+  margin: 20px 30px 0 0;
   aspect-ratio: 5 / 4;
   width: 100%;
 }
@@ -265,8 +367,14 @@ h1 {
   opacity: 0.6;
 }
 
+/* 다크모드 */
+
+body.darkMode #app {
+  background-color: #313131;
+}
+
 body.darkMode .card .front {
-  background: url("./assets/img/pokeCard_dark02.png") no-repeat center center;
+  background: url("@/assets/img/pokeCard_dark02.png") no-repeat center center;
   background-size: cover;
 }
 
@@ -277,5 +385,11 @@ body.darkMode .card .back {
 body.darkMode .gameComplete {
   background: rgb(77 77 77 / 70%);
   color: #fff;
+}
+</style>
+
+<style>
+#scrollUp {
+  display: none;
 }
 </style>

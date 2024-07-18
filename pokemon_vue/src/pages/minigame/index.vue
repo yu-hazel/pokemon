@@ -2,11 +2,17 @@
   <div>
     <div class="gameMainSec">
       <p class="gameTitle">포켓몬 미니게임</p>
-      <div class="gameMinimiWrapper">
-        <img src="@/assets/img/game_minimi.png" alt />
-        <img src="@/assets/img/game_minimi.png" alt />
-        <img src="@/assets/img/game_minimi.png" alt />
-        <img src="@/assets/img/game_minimi.png" alt />
+      <div v-if="isDarkMode" class="gameSetDark">
+        <img src="@/assets/img/game_minimi_dark.png" alt="오락기">
+        <img src="@/assets/img/game_minimi_dark.png" alt="오락기">
+        <img src="@/assets/img/game_minimi_dark.png" alt="오락기">
+        <img src="@/assets/img/game_minimi_dark.png" alt="오락기">
+      </div>
+      <div v-else class="gameSet">
+        <img src="@/assets/img/game_minimi.png" alt="오락기">
+        <img src="@/assets/img/game_minimi.png" alt="오락기">
+        <img src="@/assets/img/game_minimi.png" alt="오락기">
+        <img src="@/assets/img/game_minimi.png" alt="오락기">
       </div>
       <div class="gameBoxSet">
         <router-link to="/minigame/poke_name_quiz">
@@ -30,13 +36,35 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 import Footer from "@/components/pokeFooter.vue";
+
+// isDarkMode 상태 선언
+const isDarkMode = ref(false);
+
+onMounted(() => {
+  // 초기 darkMode 상태 설정
+  isDarkMode.value = document.body.classList.contains('darkMode');
+
+  // MutationObserver를 사용해 body 클래스 변화를 감지
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      if (mutation.attributeName === 'class') {
+        isDarkMode.value = document.body.classList.contains('darkMode');
+      }
+    });
+  });
+
+  // body 클래스를 감시
+  observer.observe(document.body, { attributes: true });
+});
+
 </script>
 
 <style scoped>
 .gameMainSec {
   /* height: calc(100vh - 60px); */
-  padding-top: 100px;
+  padding: 100px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -50,7 +78,8 @@ import Footer from "@/components/pokeFooter.vue";
   margin-bottom: 10px;
 }
 
-.gameMinimiWrapper {
+.gameSet,
+.gameSetDark {
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -100,6 +129,21 @@ import Footer from "@/components/pokeFooter.vue";
   color: #4f4f4f;
   font-size: 28px;
   font-weight: 400;
+}
+
+/* 다크모드 */
+
+body.darkMode {
+  background-color: #313131;
+}
+
+body.darkMode .gameTitle {
+  color: #fff;
+}
+
+body.darkMode .gameCon {
+  background: #ccc;
+  color: #000;
 }
 
 @media (max-width: 800px) {
