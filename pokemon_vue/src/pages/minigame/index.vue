@@ -3,27 +3,29 @@
     <div class="gameMainSec">
       <p class="gameTitle">포켓몬 미니게임</p>
       <div class="gameMinimiWrapper">
-        <img src="@/assets/img/game_minimi.png" alt>
-        <img src="@/assets/img/game_minimi.png" alt>
-        <img src="@/assets/img/game_minimi.png" alt>
-        <img src="@/assets/img/game_minimi.png" alt>
+        <img src="@/assets/img/game_minimi.png" alt />
+        <img src="@/assets/img/game_minimi.png" alt />
+        <img src="@/assets/img/game_minimi.png" alt />
+        <img src="@/assets/img/game_minimi.png" alt />
       </div>
       <div class="gameBoxSet">
-        <div class="gameCon">
-          <h3>내가 <span>누구</span>게요?</h3>
-          <img src="@/assets/img/game_pokemon.png" alt="우파이미지">
-          <div>이름 퀴즈!</div>
-        </div>
-        <router-link to="/poke_card">
+        <router-link to="/minigame/poke_name_quiz">
+          <div class="gameCon">
+            <h3>내가 <span>누구</span>게요?</h3>
+            <img src="@/assets/img/game_pokemon.png" alt="우파이미지" />
+            <div>이름 퀴즈!</div>
+          </div>
+        </router-link>
+        <router-link to="/minigame/poke_card">
           <div class="gameCon">
             <h3>내 <span>짝</span>을 찾아줘</h3>
-            <img src="@/assets/img/game_card.png" alt="우파이미지">
+            <img src="@/assets/img/game_card.png" alt="우파이미지" />
             <div>짝맞추기!</div>
           </div>
         </router-link>
       </div>
     </div>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
@@ -44,7 +46,7 @@ import Footer from "@/components/pokeFooter.vue";
 
 .gameTitle {
   font-size: 40px;
-  color: #EC6666;
+  color: #ec6666;
   margin-bottom: 10px;
 }
 
@@ -89,13 +91,13 @@ import Footer from "@/components/pokeFooter.vue";
 }
 
 .gameCon > h3 > span {
-  color: #E94242;
+  color: #e94242;
   font-size: 44px;
   font-weight: 400;
 }
 
 .gameCon > div {
-  color: #4F4F4F;
+  color: #4f4f4f;
   font-size: 28px;
   font-weight: 400;
 }

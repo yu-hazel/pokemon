@@ -2,12 +2,18 @@
   <div id="app">
     <div class="gameContainer">
       <h1>내 짝을 찾아줘!</h1>
+
       <div class="cardGrid">
-        <div v-for="pokemon in pokemonData" :key="pokemon.id" class="card"
-          :class="{ flipped: pokemon.flipped, matched: pokemon.matched }" @click="flipCard(pokemon)">
+        <div
+          v-for="pokemon in pokemonData"
+          :key="pokemon.id"
+          class="card"
+          :class="{ flipped: pokemon.flipped, matched: pokemon.matched }"
+          @click="flipCard(pokemon)"
+        >
           <div class="front"></div>
           <div class="back">
-            <img :src="getPokemonImageUrl(pokemon.url)" :alt="pokemon.name">
+            <img :src="getPokemonImageUrl(pokemon.url)" :alt="pokemon.name" />
           </div>
         </div>
       </div>
@@ -20,10 +26,10 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 export default {
-  name: 'App',
+  name: "App",
   setup() {
     const pokemonData = ref([]);
     const firstCard = ref(null);
@@ -34,15 +40,17 @@ export default {
 
     const loadPokemons = async () => {
       const offset = Math.floor(Math.random() * 1000);
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=10`);
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=10`
+      );
       const data = await response.json();
       const pokemons = data.results;
 
-      pokemonData.value = [...pokemons, ...pokemons].map(pokemon => ({
+      pokemonData.value = [...pokemons, ...pokemons].map((pokemon) => ({
         ...pokemon,
         id: Math.random(),
         flipped: false,
-        matched: false
+        matched: false,
       }));
 
       pokemonData.value.sort(() => Math.random() - 0.5);
@@ -51,7 +59,7 @@ export default {
     };
 
     const getPokemonImageUrl = (url) => {
-      const parts = url.split('/');
+      const parts = url.split("/");
       const id = parts[parts.length - 2];
       return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
     };
@@ -119,21 +127,21 @@ export default {
       isGameComplete,
       getPokemonImageUrl,
       flipCard,
-      restartGame
+      restartGame,
     };
-  }
+  },
 };
 </script>
 
 <style scoped>
-@import url('https://webfontworld.github.io/DungGeunMo/DungGeunMo.css');
+@import url("https://webfontworld.github.io/DungGeunMo/DungGeunMo.css");
 /* 둥근모꼴 */
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'DungGeunMo';
+  font-family: "DungGeunMo";
 }
 
 #app {
@@ -190,7 +198,7 @@ h1 {
 }
 
 .card .front {
-  background: url('@/assets/img/pokeCard.png') no-repeat center center;
+  background: url("@/assets/img/pokeCard.png") no-repeat center center;
   background-size: cover;
   transform: rotateY(0deg);
 }
@@ -245,7 +253,7 @@ h1 {
 .restartButton {
   padding: 10px 20px;
   border: none;
-  background-color: #FDA7A7;
+  background-color: #fda7a7;
   margin-top: 20px;
   cursor: pointer;
   transition: 0.3s;
@@ -258,7 +266,7 @@ h1 {
 }
 
 body.darkMode .card .front {
-  background: url('./assets/img/pokeCard_dark02.png') no-repeat center center;
+  background: url("./assets/img/pokeCard_dark02.png") no-repeat center center;
   background-size: cover;
 }
 
