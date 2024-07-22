@@ -43,8 +43,8 @@
         <div id="searchResultCount">{{ searchResultCount }}</div>
         <div class="cardSec">
           <div v-for="pokemon in pokemons" :key="pokemon.id">
-            <router-link :to="`/${pokemon.id}`">
-              <div class="cardOne" :style="setCardBackgroundColor(pokemon)">
+            <div class="cardOne" @click="openViewModal(pokemon.id)">
+              <div class="cardOne">
                 <span>no.{{ pokemon.id }}</span>
                 <img :src="pokemon.sprite" :alt="pokemon.names.korean" />
                 <span>{{ pokemon.names.korean }}</span>
@@ -56,7 +56,7 @@
                   </p>
                 </div>
               </div>
-            </router-link>
+            </div>
           </div>
         </div>
         <div v-if="endOfListMessage" class="endOfListMessage">
@@ -64,13 +64,31 @@
         </div>
       </div>
     </div>
+    <v-dialog v-model="isModalOpen" max-width="600px">
+      <pokemon-detail-modal
+        :id="selectedPokemonId"
+        @close="isModalOpen = false"
+      />
+    </v-dialog>
   </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
+import { usePokemonStore } from "@/stores/pokemonStore";
 import { typeColors, darkTypeColors } from "@/utils/back_color.js";
 import highlightWord from "@/components/main_highlight_word.vue";
 
+// const store = usePokemonStore(); //피니아로 로드된 포켓몬 저장
+const isModalOpen = ref(false);
+const selectedPokemonId = ref(null);
+
+//모달 컴포넌트 임포트
+import PokemonDetailModal from "@/components/PokemonDetailModal.vue";
+
+const openViewModal = (id) => {
+  selectedPokemonId.value = id;
+  isModalOpen.value = true;
+};
 // 상태 변수
 const searchQuery = ref(""); // 검색어
 const searchResultCount = ref(""); // 검색 결과 개수
@@ -79,13 +97,34 @@ let offset = 0; // 데이터 오프셋
 const limit = 16; // 한 번에 가져올 포켓몬 수
 const loadedPokemonNames = new Set(); // 이미 로드된 포켓몬 이름
 const isLoading = ref(false); // 로딩 상태
+
 const currentFilter = ref(""); // 현재 필터
+const cardBackgroundColor = ref(""); // 배경색을 저장하는 변수
+
 const morePokemonsAvailable = ref(true); // 더 많은 포켓몬이 있는지 확인
 const loadingScreen = ref(false); // 로딩 화면 상태
 const endOfListMessage = ref(false); // 목록 끝 메시지 상태
 const showTooltip = ref(false); // 툴팁 표시 상태
 const isSearchMode = ref(false); // 검색 모드 상태
 let allPokemonNames = ref([]); // 모든 포켓몬 이름 데이터
+
+//스크롤 위치 저장
+// onBeforeUnmount(() => {
+//   console.log(`Saving scroll position: ${window.scrollY}`);
+//   localStorage.setItem("scrollY", window.scrollY);
+// });
+
+// 스크롤 위치 저장 함수
+function saveScrollPosition() {
+  const scrollY = window.scrollY;
+  localStorage.setItem("scrollY", scrollY.toString());
+  console.log(`Saving scroll position: ${scrollY}`);
+}
+
+// 라우터 변경 전 스크롤 위치 저장
+onBeforeUnmount(() => {
+  saveScrollPosition();
+});
 
 // 포켓몬 ID로 상세 정보 API 호출
 async function fetchPokemonDetailsById(id) {
@@ -103,6 +142,7 @@ async function fetchPokemonDetailsById(id) {
   };
 }
 
+//스크롤 막기
 // watch로 isLoading 상태 변화를 감지하여 스크롤 막기/활성화 처리
 watch(isLoading, (newValue) => {
   const htmlElement = document.documentElement; // <html> 태그 선택
@@ -173,9 +213,10 @@ async function fetchPokemonSpecies(pokemon) {
 // 포켓몬 데이터 로드하고 화면에 표시
 async function loadPokemons() {
   if (isLoading.value || !morePokemonsAvailable.value) return; // 이미 로드 중이거나 더 이상 로드할 포켓몬이 없으면 중복 요청 방지
-  isLoading.value = true; // 로딩 시작
   loadingScreen.value = true; // 로딩 화면 표시
+  isLoading.value = true; // 로딩 시작
   document.body.style.overflow = "hidden"; // 스크롤 막기
+
   const pokemonsData = await fetchPokemons(offset, limit, currentFilter.value);
 
   if (pokemonsData.length === 0) {
@@ -210,12 +251,13 @@ async function loadPokemons() {
           types: details.types.map((typeInfo) => typeInfo.type.name),
         });
 
-        loadedPokemonNames.add(pokemon.name);
+        // store.loadedPokemonNames.add(pokemon.name);
       } catch (error) {
         console.error(`Error fetching data for ${pokemon.name}:`, error);
       }
     }
   }
+  // store.addPokemons(pokemons.value);
 
   offset += limit;
   isLoading.value = false;
@@ -263,36 +305,37 @@ async function handleSearch() {
 }
 
 // 필터링 기능
-function filterByType(type) {
+async function filterByType(type) {
   isSearchMode.value = false; // 검색 모드 비활성화
+  searchQuery.value = ""; //검색창 비우기
   offset = 0;
   loadedPokemonNames.clear();
   pokemons.value = [];
   currentFilter.value = type;
+  console.log("currentFilter:", currentFilter.value); //콘솔에 currentFilter 출력
   removeEndOfListMessage();
   clearSearchResultCount();
   morePokemonsAvailable.value = true;
-  loadPokemons();
+  await loadPokemons();
+  // setCardBackgroundColor(); // 필터가 적용된 후 배경색 설정
 }
 
-// 카드의 배경색 다크 모드 설정
-function setCardBackgroundColor(pokemon) {
-  const type = currentFilter.value || pokemon.types[0];
-  if (document.body.classList.contains("darkBtn")) {
-    return { backgroundColor: darkTypeColors[type] };
-  } else {
-    return { backgroundColor: typeColors[type] };
-  }
-}
+// // 포켓몬 카드의 배경색을 설정하는 함수
+// function applyCardBackgroundColors() {
+//   pokemons.value.forEach((pokemon) => {
+//     setCardBackgroundColor(pokemon);
+//   });
+// }
 
-// 다크 모드 토글
-function toggleDarkMode() {
-  document.body.classList.toggle("darkBtn");
-  document.getElementById("lightDarkToggle").classList.toggle("darkBtn");
-  pokemons.value.forEach((pokemon) => {
-    setCardBackgroundColor(pokemon);
-  });
-}
+// // 배경색을 설정하는 함수
+// function setCardBackgroundColor() {
+//   const type = currentFilter.value;
+//   if (document.body.classList.contains("darkMode")) {
+//     cardBackgroundColor.value = darkTypeColors[type] || "#000"; // 기본 다크 색상 설정
+//   } else {
+//     cardBackgroundColor.value = typeColors[type] || "#fff"; // 기본 밝은 색상 설정
+//   }
+// }
 
 // 하단에 문구를 표시하는 함수
 function showEndOfListMessage() {
