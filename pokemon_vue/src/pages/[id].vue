@@ -46,6 +46,7 @@ import pokemonData from "@/assets/poke_details_data.json";
 const route = useRoute();
 const pokemon = ref({});
 
+//id값 받아서 데이터 호출
 onMounted(() => {
   const id = route.params.id;
   pokemon.value = pokemonData.find((p) => p.id == id);
