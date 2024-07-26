@@ -32,7 +32,7 @@
             <p
               v-for="(translation, type) in typeTranslations"
               :key="type"
-              :class="type"
+              :class="['nes-btn', type]"
               @click="filterByType(type)"
             >
               {{ translation }}
@@ -43,20 +43,29 @@
         <div id="searchResultCount">{{ searchResultCount }}</div>
         <div class="cardSec">
           <div v-for="pokemon in pokemons" :key="pokemon.id">
-            <div class="cardOne" @click="openViewModal(pokemon.id)">
-              <div class="cardOne">
-                <span>no.{{ pokemon.id }}</span>
-                <img :src="pokemon.sprite" :alt="pokemon.names.korean" />
-                <span>{{ pokemon.names.korean }}</span>
+            <div
+              class="cardOne nes-container is-rounded"
+              @click="openViewModal(pokemon.id)"
+            >
+              <!-- <div class="cardOne nes-container is-rounded"> -->
+              <span>no.{{ pokemon.id }}</span>
+              <img :src="pokemon.sprite" :alt="pokemon.names.korean" />
+              <span>{{ pokemon.names.korean }}</span>
+              <div class="langEnJp">
                 <span>{{ pokemon.names.english }}</span>
                 <span>{{ pokemon.names.japanese }}</span>
-                <div class="typeWrap">
-                  <p v-for="type in pokemon.types" :key="type" :class="type">
-                    {{ typeTranslations[type] }}
-                  </p>
-                </div>
+              </div>
+              <div class="typeWrap">
+                <p
+                  v-for="type in pokemon.types"
+                  :key="type"
+                  :class="['nes-btn', type]"
+                >
+                  {{ typeTranslations[type] }}
+                </p>
               </div>
             </div>
+            <!-- </div> -->
           </div>
         </div>
         <div v-if="endOfListMessage" class="endOfListMessage">
@@ -64,31 +73,35 @@
         </div>
       </div>
     </div>
+    <!-- 모달 -->
     <v-dialog v-model="isModalOpen" max-width="600px">
-      <pokemon-detail-modal
-        :id="selectedPokemonId"
-        @close="isModalOpen = false"
-      />
+      <pokemon-detail-modal :id="selectedPokemonId" @close="closeViewModal" />
     </v-dialog>
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch, nextTick } from "vue";
 import { usePokemonStore } from "@/stores/pokemonStore";
 import { typeColors, darkTypeColors } from "@/utils/back_color.js";
 import highlightWord from "@/components/main_highlight_word.vue";
 
-// const store = usePokemonStore(); //피니아로 로드된 포켓몬 저장
+//모달
 const isModalOpen = ref(false);
 const selectedPokemonId = ref(null);
 
 //모달 컴포넌트 임포트
 import PokemonDetailModal from "@/components/PokemonDetailModal.vue";
 
+//모달 열기
 const openViewModal = (id) => {
   selectedPokemonId.value = id;
   isModalOpen.value = true;
 };
+// 모달 닫기 함수
+const closeViewModal = () => {
+  isModalOpen.value = false;
+};
+
 // 상태 변수
 const searchQuery = ref(""); // 검색어
 const searchResultCount = ref(""); // 검색 결과 개수
@@ -152,6 +165,18 @@ watch(isLoading, (newValue) => {
     htmlElement.style.overflowY = "auto"; // 스크롤 다시 활성화
   }
 });
+
+//스크롤 막기 body 태그의 높이와 overflow를 이용해서 스크롤 완전히 차단
+// watch(isLoading, (newValue) => {
+//   const bodyElement = document.body; // <body> 태그 선택
+//   if (newValue) {
+//     bodyElement.style.height = "100vh"; // 높이를 100vh로 설정
+//     bodyElement.style.overflow = "hidden"; // 스크롤 막기
+//   } else {
+//     bodyElement.style.height = ""; // 높이를 원래대로 설정
+//     bodyElement.style.overflow = ""; // 스크롤 다시 활성화
+//   }
+// });
 
 // 타입 번역
 const typeTranslations = {
@@ -251,7 +276,14 @@ async function loadPokemons() {
           types: details.types.map((typeInfo) => typeInfo.type.name),
         });
 
-        // store.loadedPokemonNames.add(pokemon.name);
+        // 다크모드가 활성화된 경우 is-dark 클래스를 추가
+        if (document.body.classList.contains("darkMode")) {
+          nextTick(() => {
+            document.querySelectorAll(".cardOne").forEach((card) => {
+              card.classList.add("is-dark");
+            });
+          });
+        }
       } catch (error) {
         console.error(`Error fetching data for ${pokemon.name}:`, error);
       }
@@ -320,23 +352,6 @@ async function filterByType(type) {
   // setCardBackgroundColor(); // 필터가 적용된 후 배경색 설정
 }
 
-// // 포켓몬 카드의 배경색을 설정하는 함수
-// function applyCardBackgroundColors() {
-//   pokemons.value.forEach((pokemon) => {
-//     setCardBackgroundColor(pokemon);
-//   });
-// }
-
-// // 배경색을 설정하는 함수
-// function setCardBackgroundColor() {
-//   const type = currentFilter.value;
-//   if (document.body.classList.contains("darkMode")) {
-//     cardBackgroundColor.value = darkTypeColors[type] || "#000"; // 기본 다크 색상 설정
-//   } else {
-//     cardBackgroundColor.value = typeColors[type] || "#fff"; // 기본 밝은 색상 설정
-//   }
-// }
-
 // 하단에 문구를 표시하는 함수
 function showEndOfListMessage() {
   removeEndOfListMessage();
@@ -404,6 +419,7 @@ function getLanguageType(text) {
   }
 }
 
+// 초기 포켓몬 데이터 로드
 // 초기 포켓몬 데이터 로드
 onMounted(() => {
   loadPokemonNames(); // JSON 데이터 로드

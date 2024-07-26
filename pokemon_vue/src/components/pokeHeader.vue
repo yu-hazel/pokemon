@@ -2,7 +2,7 @@
   <div>
     <header>
       <img id="menuBt" src="@/assets/img/pika.png" alt @click.stop="toggleMenu" />
-      <div class="menu" :class="{ on: isMenuOn }">
+      <div class="menu " :class="{ on: isMenuOn }">
         <div class="catMenu">
           <router-link to= /> 도감</router-link>
           <router-link to=/minigame> 미니게임</router-link>
@@ -18,7 +18,8 @@
       </div>
       <div id="lightDarkToggle">light, dark mode toggle</div>
     </header>
-    <i class="fa-solid fa-circle-arrow-up" id="scrollUp"></i>
+      <div class="nes-btn is-error" id="scrollUp">
+        <span>&gt;</span></div>
   </div>
 </template>
 <script setup>

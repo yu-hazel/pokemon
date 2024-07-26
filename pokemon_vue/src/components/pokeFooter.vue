@@ -21,8 +21,9 @@ footer {
   height: 30px;
   position: fixed;
   bottom: 0;
-  background: #fda7a7;
+  background: #b3b3b3;
   color: white;
+  box-shadow: 0 0 0px 5px rgb(108, 108, 108);
 }
 footer > a {
   display: flex;

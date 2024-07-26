@@ -16,10 +16,12 @@ function toggleImage(elementId, lightSrc, darkSrc) {
   // console.log('Image element:', img); // 콘솔에 이미지 태그 출력
 }
 
+
 // 라이트, 다크모드 버튼 토글
 function setupDarkModeToggle() {
   document.getElementById('lightDarkToggle').addEventListener('click', function () {
     document.body.classList.toggle('darkMode');
+
 
     // 이미지 다크모드 토글
     toggleImage('lang', '/src/assets/img/lang.png', '/src/assets/img/lang_dark.png');
@@ -36,7 +38,7 @@ function setupDarkModeToggle() {
       // console.log('Search button background image:', searchBt.style.backgroundImage); // 검색 버튼 배경 이미지 경로 출력
     }
     // 카드 다크모드 토글
-    toggleClass('.cardOne', 'darkBtn');
+    toggleClass('.cardOne', 'is-dark');
   });
 }
 
@@ -50,7 +52,7 @@ function scrollToTop() {
 
 // 페이지 최상단으로 이동하는 버튼에 클릭 이벤트를 추가
 function setupScrollToTopButton() {
-  const scrollToTopBt = document.querySelector('.fa-circle-arrow-up');
+  const scrollToTopBt = document.querySelector('#scrollUp');
   if (scrollToTopBt) {
     scrollToTopBt.addEventListener('click', scrollToTop);
   }
