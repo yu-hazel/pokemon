@@ -119,8 +119,6 @@ const restartGame = () => {
 };
 
 onMounted(loadPokemons);
-
-
 </script>
 
 <!-- <script>
@@ -388,7 +386,13 @@ body.darkMode .gameComplete {
 }
 </style>
 
-<style>
+<style scoped>
+html,
+body {
+  height: auto;
+  margin: 0;
+  overflow: initial; /* 스크롤바를 숨기기 위해 추가 */
+}
 #scrollUp {
   display: none;
 }
