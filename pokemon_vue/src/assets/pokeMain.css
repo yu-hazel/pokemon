@@ -1,9 +1,9 @@
 @charset "UTF-8";
 /* 포켓몬 메인 css */
-
-@import url('https://webfontworld.github.io/DungGeunMo/DungGeunMo.css');
+@import url('https://unpkg.com/nes.css@latest/css/nes.min.css');
+/* 픽셀디자인 css */
+@import url('https://unpkg.com/nes.css/css/nes-core.min.css');
 /* 둥근모꼴 */
-
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
 /* font-awsome v6.1.1 */
 
@@ -13,7 +13,42 @@
   font-weight: normal;
   font-style: normal;
 }
+
+/* 이미지 픽셀 */
+img {
+  image-rendering: pixelated !important;
+}
+
 /* 신비는일곱살 폰트 */
+/* 라이브러리 */
+.nes-btn {
+  border-image-repeat: initial;
+  border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(107, 107, 107)" /></svg>')
+}
+.nes-container.is-rounded.is-dark {
+  border-image-repeat: initial;
+  box-shadow: inset -5px -5px 0px rgb(225, 225, 225);
+  border-image-outset: 1;
+  background-color: #3d3d3d;
+  border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="8" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z" fill="rgb(146, 146, 146)" /></svg>');
+}
+.nes-container.is-rounded {
+  border-image-repeat: initial;
+  box-shadow: inset -5px -5px 0px rgb(154 154 154);
+  border-image-outset: 1;
+  background-color: #ffffff;
+  border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="8" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z" fill="rgb(107, 107, 107)" /></svg>')
+}
+.nes-container.is-rounded:hover {
+  border-radius: 0px;
+  filter: brightness(0.85) contrast(1.05);
+}
+.nes-container.is-rounded.is-dark:hover {
+  border-radius: 0px;
+  filter: brightness(1.25) contrast(1.05);
+  /* background-color: #3e3d3a; */
+  ;
+}
 
 /* 툴팁 */
 .tooltip {
@@ -27,14 +62,12 @@
   border-radius: 20px;
   font-size: 12px;
 }
-.langText, .login {
-  /* cursor: pointer; */
-}
+
 .updateNotice {
   display: block;
   position: absolute;
-  top: 54%;
-  left: 17px;
+  top: 52%;
+  left: 13px;
   width: 200px;
   line-height: 13px;
   text-align: center;
@@ -53,6 +86,7 @@
 }
 :root, body {
   font-family: 'DungGeunMo';
+  background-color: #f1f1f1;
 }
 a:link,
 a:visited {
@@ -66,10 +100,12 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px 50px;
-  background-color: #FDA7A7;
+  background-color: #b3b3b3;
   position: fixed;
   top: 0px;
   z-index: 2000;
+  /* 그림자 */
+  box-shadow: 0 0 0px 5px rgb(108, 108, 108);
 }
 
 .mainSec {
@@ -83,34 +119,29 @@ header {
   align-items: center;
 }
 .mainSec {
-  gap: 60px;
+  gap: 70px;
 }
 h2 {
   font-size: 40px;
-  color: #EC6666;
+  color: #001cec;
   margin: 30px 0;
   font-weight: 300;
-}
-#menuBt {
-  cursor: pointer;
 }
 .menu {
   display: flex;
   /* width: 0; */
   flex-direction: column;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
   color: #000;
-  border-radius: 0 0 300% 0;
   position: absolute;
-  width: 340px;
-  height: 500px;
+  width: 220px;
+  height: 420px;
   font-size: 24px;
   gap: 10px;
-  top: 62px;
-  left: -175px;
-  padding: 50px 0 100px 50px;
-  box-shadow: 2.266px 3.021px 15.104px 0px rgba(0, 0, 0, 0.25);
+  top: 66px;
+  left: -239px;
+  padding: 30px 0 30px 22px;
   z-index: 0;
   transition: left 0.5s ease-in-out;
   /* position: relative; */
@@ -161,17 +192,33 @@ h2 {
   height: 30px;
 }
 #monsterBall {
-  width: 110px;
-  height: 110px;
+  width: 100px;
+  height: 100px;
   position: absolute;
-  bottom: 100px;
-  right: 30px;
+  top: 175px;
+  right: -124px;
   z-index: 10;
-  cursor: pointer;
+  /* cursor: pointer; */
+  animation: blink 1s infinite;
+  /* 애니메이션 추가 */
 }
 /* 몬스터볼 호버시 밝아지게 */
 #monsterBall:hover {
   filter: saturate(2.0) brightness(1.2);
+  animation: none;
+  /* 호버 시 애니메이션 중지 */
+}
+/* 깜빡이는 애니메이션 정의 */
+@keyframes blink {
+  0%, 100% {
+    filter: saturate(1.0) brightness(1.0);
+  }
+  25%, 75% {
+    filter: saturate(2.3) brightness(1.5);
+  }
+  50% {
+    filter: saturate(1.8) brightness(1.2);
+  }
 }
 #lightDarkToggle {
   width: 75px;
@@ -179,7 +226,7 @@ h2 {
   background: url(@/assets/img/llight_mode.png) no-repeat;
   background-size: cover;
   text-indent: -9999px;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 body.darkMode #lightDarkToggle {
   background: url(@/assets/img/dark_mode.png) no-repeat;
@@ -195,9 +242,7 @@ body.darkMode #lightDarkToggle {
 #search {
   width: 433px;
   height: 56px;
-  border-radius: 50px;
-  box-shadow: 0px 8px 20px 0px rgba(100, 100, 100, 0.25);
-  border: none;
+  box-shadow: 0px -3px 0px 0px rgb(107, 107, 107), 0px 3px 0px 0px rgb(107, 107, 107), 3px 0px 0px 0px rgb(107, 107, 107), -3px 0px 0px 0px rgb(107, 107, 107);
   position: relative;
   padding: 0 30px;
   font-family: 'DungGeunMo';
@@ -221,25 +266,26 @@ body.darkMode #lightDarkToggle {
   right: 25px;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 .type {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   outline: 2px solid #ccc;
   position: relative;
-  width: 40vw;
+  padding: 10px 0;
+  width: 60vw;
 
 }
 .typeTitle {
-  font-size: 18px;
+  font-size: 24px;
   color: #656565;
-  background-color: #fff;
+  background-color: #f1f1f1;
   position: absolute;
-  top: -15px;
+  top: -28px;
   padding: 5px;
 }
 .typeGroup {
@@ -249,94 +295,73 @@ body.darkMode #lightDarkToggle {
   justify-items: center;
   align-items: center;
   padding: 30px 0;
-  gap: 10px;
+  gap: 20px;
   width: 90%;
 }
 .typeGroup p {
+  margin: 0;
   display: flex;
-  padding: 5px 25px;
+  height: 40px;
+  border-image-repeat: initial;
   justify-content: center;
   align-items: center;
-  border-radius: 15px;
   color: #fff;
-  cursor: pointer;
-  transition: 0.3s;
 }
 .normal {
-  border: 2px solid #605A4E;
   background: #ADA595;
 }
 .fighting {
-  border: 2px solid #7B0E09;
   background: #C02F28;
 }
 .poison {
-  border: 2px solid #AF8BB1;
   background: #853C89;
 }
 .ground {
-  border: 2px solid #875011;
   background: #CB985D;
 }
 .flying {
-  border: 2px solid #4F67CD;
   background: #9AABF2;
 }
 .bug {
-  border: 2px solid #758108;
   background: #9FAE1A;
 }
 .rock {
-  border: 2px solid #DEBC55;
   background: #9D853C;
 }
 .water {
-  border: 2px solid #166FDD;
   background: #669FE6;
 }
 .steel {
-  border: 2px solid #5F5D7A;
   background: #9D9CAD;
 }
 .ghost {
-  border: 2px solid #493564;
   background: #887A9A;
 }
 .fire {
-  border: 2px solid #B84D12;
   background: #F26E25;
 }
 .electric {
-  border: 2px solid #BA8400;
   background: #FEB912;
 }
 .grass {
-  border: 2px solid #3A8B0D;
   background: #54B81C;
 }
 .ice {
-  border: 2px solid #11A7D9;
   background: #7BDAFA;
 }
 .psychic {
-  border: 2px solid #BC1B4C;
   background: #EA5381;
 }
 .dragon {
-  border: 2px solid #A598E2;
   background: #573FC6;
 }
 .dark {
-  border: 2px solid #919191;
   background: #403C38;
 }
 .fairy {
-  border: 2px solid #C96ACA;
   background: #EBA4EC;
 }
-.typeGroup p:hover {
-  opacity: 0.6;
-}
+
 .sort {
   display: flex;
   width: 100vw;
@@ -360,78 +385,8 @@ body.darkMode #lightDarkToggle {
   align-items: center;
   width: 276px;
   height: 318px;
-  padding: 19px 20px;
-  gap: 15px;
-  border-radius: 30px;
-  background-color: #EDF9ED;
-  transition: transform 0.3s ease;
-  /* transition: boxshadow 0.3s ease; */
-}
-/* body.darkMode .cardOne {
-  background-color: #767676 !important;
-}
-body {
-  background-color: #f8f8f8 !important;
-} */
-
-.cardOne:hover {
-  transform: scale(1.05);
-  box-shadow: 4px 4px 15px 0px rgba(0, 0, 0, 0.25);
-}
-
-.cardOne:has(.normal:first-child) {
-  background: #E7E7E7;
-}
-.cardOne:has(.fighting:first-child) {
-  background: #F2B6B6;
-}
-.cardOne:has(.poison:first-child) {
-  background: #E7D0F0;
-}
-.cardOne:has(.ground:first-child) {
-  background: #F2D7AE;
-}
-.cardOne:has(.flying:first-child) {
-  background: #D0E3FF;
-}
-.cardOne:has(.bug:first-child) {
-  background: #E6F2CE;
-}
-.cardOne:has(.rock:first-child) {
-  background: #F2E0BB;
-}
-.cardOne:has(.water:first-child) {
-  background: #D0E3FF;
-}
-.cardOne:has(.steel:first-child) {
-  background: #E2E2F2;
-}
-.cardOne:has(.ghost:first-child) {
-  background: #E0D0E7;
-}
-.cardOne:has(.fire:first-child) {
-  background: #F2C6A2;
-}
-.cardOne:has(.electric:first-child) {
-  background: #F2E3C1;
-}
-.cardOne:has(.grass:first-child) {
-  background: #D6F2C1;
-}
-.cardOne:has(.ice:first-child) {
-  background: #C1F2F2;
-}
-.cardOne:has(.psychic:first-child) {
-  background: #F2C1D3;
-}
-.cardOne:has(.dragon:first-child) {
-  background: #E3D0F2;
-}
-.cardOne:has(.dark:first-child) {
-  background: #D0D0D0;
-}
-.cardOne:has(.fairy:first-child) {
-  background: #F2E1F2;
+  gap: 2px;
+  padding: 5px 0 0 20px;
 }
 
 /* 다크모드 */
@@ -442,11 +397,12 @@ body.darkMode .typeTitle {
   color: #fff;
 }
 body.darkMode .menu {
-  background-color: #424242;
+  /* background-color: #424242; */
+  background-color: rgba(78, 78, 78, 0.8);
   color: #fff;
 }
 body.darkMode #search {
-  box-shadow: 0px 8px 20px 0px rgba(36, 36, 36, 0.25);
+  box-shadow: 0px -3px 0px 0px rgb(255, 255, 255), 0px 3px 0px 0px rgb(255, 255, 255), 3px 0px 0px 0px rgb(255, 255, 255), -3px 0px 0px 0px rgb(255, 255, 255);
   background-color: #363636;
   color: #fff;
 }
@@ -454,6 +410,8 @@ body.darkMode #search {
 body.darkMode header,
 body.darkMode footer {
   background-color: #363636;
+  /* 그림자 */
+  box-shadow: 0 0 0px 5px rgb(41, 41, 41);
   color: #fff;
 }
 
@@ -473,7 +431,6 @@ body.darkMode .tooltip, body.darkMode .updateNotice {
   color: #fff;
 }
 
-/* 다크모드 */
 @keyframes blinkDark {
   0%,
   100% {
@@ -484,71 +441,22 @@ body.darkMode .tooltip, body.darkMode .updateNotice {
   }
 }
 
-body.darkMode .cardOne:has(.normal:first-child) {
-  background: #A1A1A1;
-}
-body.darkMode .cardOne:has(.fighting:first-child) {
-  background: #B26767;
-}
-body.darkMode .cardOne:has(.poison:first-child) {
-  background: #B39BBF;
-}
-body.darkMode .cardOne:has(.ground:first-child) {
-  background: #BFA17B;
-}
-body.darkMode .cardOne:has(.flying:first-child) {
-  background: #9CB2DF;
-}
-body.darkMode .cardOne:has(.bug:first-child) {
-  background: #B4C39C;
-}
-body.darkMode .cardOne:has(.rock:first-child) {
-  background: #BFAE85;
-}
-body.darkMode .cardOne:has(.water:first-child) {
-  background: #9CB2DF;
-}
-body.darkMode .cardOne:has(.steel:first-child) {
-  background: #A0A0B0;
-}
-body.darkMode .cardOne:has(.ghost:first-child) {
-  background: #A396B0;
-}
-body.darkMode .cardOne:has(.fire:first-child) {
-  background: #BF8A71;
-}
-body.darkMode .cardOne:has(.electric:first-child) {
-  background: #BFA982;
-}
-body.darkMode .cardOne:has(.grass:first-child) {
-  background: #A5BFA0;
-}
-body.darkMode .cardOne:has(.ice:first-child) {
-  background: #84C0C0;
-}
-body.darkMode .cardOne:has(.psychic:first-child) {
-  background: #BF8A97;
-}
-body.darkMode .cardOne:has(.dragon:first-child) {
-  background: #B8A0BF;
-}
-body.darkMode .cardOne:has(.dark:first-child) {
-  background: #909090;
-}
-body.darkMode .cardOne:has(.fairy:first-child) {
-  background: #BF9FBF;
-}
 
-.cardOne span:first-of-type {
+.cardOne > span:first-of-type {
   width: 100%;
   text-align: left;
 }
 .cardOne img {
-  width: 100px;
-  height: 100px;
+  width: 148px;
+  /* height: 160px; */
 }
-.cardOne span:nth-of-type(2) {
+.cardOne > span:nth-of-type(2) {
   font-size: 24px;
+}
+.langEnJp {
+  display: flex;
+  font-size: 16px;
+  gap: 5px;
 }
 .typeWrap {
   display: flex;
@@ -558,35 +466,42 @@ body.darkMode .cardOne:has(.fairy:first-child) {
 }
 .typeWrap > p {
   display: flex;
-  padding: 5px 25px;
+  /* padding: 5px 25px; */
   justify-content: center;
   align-items: center;
-  border-radius: 15px;
+  height: 28px;
+  /* border-radius: 15px; */
   color: #fff;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: 0.3s;
 }
 
 /* 스크롤 버튼 */
 #scrollUp {
+  display: flex;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
   position: fixed;
   z-index: 20;
-  /* height: 50px;
-    width: 50px; */
   font-size: 60px;
-  color: #FDA7A7;
   bottom: 40px;
   right: 40px;
-  /* cursor: pointer; */
-  transition: 0.3s;
-  opacity: 0.6;
-}
-#scrollUp:hover {
-  opacity: 1;
+  transform: rotate(-90deg);
 }
 #scrollUp.darkScrollUp {
   color: #fff;
 }
+#scrollUp > span {
+  position: absolute;
+  left: 7px;
+  bottom: -21px;
+}
+body.darkMode #scrollUp {
+  color: #000;
+}
+
+
 
 /* 데이터를 다 불러왔을 때 표시할 메시지 */
 .endOfListMessage {
@@ -635,14 +550,20 @@ iframe {
   .typeGroup {
     flex-wrap: nowrap;
     overflow-x: scroll;
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
     padding: 30px 20px;
     gap: 15px;
   }
+  .typeGroup::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+  }
   .typeGroup p {
     display: flex;
+    width: 80px;
     white-space: nowrap;
   }
+
   header {
     width: 100vw;
     padding: 10px 20px;

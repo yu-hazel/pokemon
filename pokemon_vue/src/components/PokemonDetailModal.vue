@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>
       포켓몬 상세 정보
-      <v-btn icon @click="$emit('close')">
+      <v-btn icon variant="text" @click="$emit('close')">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-card-title>
