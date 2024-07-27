@@ -127,17 +127,17 @@ let allPokemonNames = ref([]); // 모든 포켓몬 이름 데이터
 //   localStorage.setItem("scrollY", window.scrollY);
 // });
 
-// 스크롤 위치 저장 함수
-function saveScrollPosition() {
-  const scrollY = window.scrollY;
-  localStorage.setItem("scrollY", scrollY.toString());
-  console.log(`Saving scroll position: ${scrollY}`);
-}
+// // 스크롤 위치 저장 함수
+// function saveScrollPosition() {
+//   const scrollY = window.scrollY;
+//   localStorage.setItem("scrollY", scrollY.toString());
+//   console.log(`Saving scroll position: ${scrollY}`);
+// }
 
-// 라우터 변경 전 스크롤 위치 저장
-onBeforeUnmount(() => {
-  saveScrollPosition();
-});
+// // 라우터 변경 전 스크롤 위치 저장
+// onBeforeUnmount(() => {
+//   saveScrollPosition();
+// });
 
 // 포켓몬 ID로 상세 정보 API 호출
 async function fetchPokemonDetailsById(id) {
