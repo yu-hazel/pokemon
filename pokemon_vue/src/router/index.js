@@ -32,7 +32,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory('/build-test/'),  // GitHub Pages URL 경로 설정
+  history: createWebHistory('/pokemon/'),  // GitHub Pages URL 경로 설정
   routes,
 });
 

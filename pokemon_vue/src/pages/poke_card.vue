@@ -22,7 +22,7 @@
         <button class="restartButton" @click="restartGame">다시 하기</button>
       </div>
     </div>
-    <pokeFooter />
+    <!-- <pokeFooter /> -->
   </div>
 </template>
 

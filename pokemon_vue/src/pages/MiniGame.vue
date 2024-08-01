@@ -23,14 +23,14 @@
         <img src="@/assets/img/game_minimi.png" alt="오락기" />
       </div> -->
       <div class="gameBoxSet">
-        <router-link to="/minigame/poke_name_quiz">
+        <router-link to="/minigame/namequiz">
           <div class="gameCon nes-container is-rounded">
             <h3>내가 <span>누구</span>게요?</h3>
             <img src="@/assets/img/game_pokemon.png" alt="우파이미지" />
             <div>이름 퀴즈!</div>
           </div>
         </router-link>
-        <router-link to="/minigame/poke_card">
+        <router-link to="/minigame/pokecard">
           <div class="gameCon nes-container is-rounded">
             <h3>내 <span>짝</span>을 찾아줘</h3>
             <img
@@ -44,13 +44,13 @@
         </router-link>
       </div>
     </div>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
-import Footer from "@/components/pokeFooter.vue";
+// import Footer from "@/components/pokeFooter.vue";
 
 // isDarkMode 상태 선언
 const isDarkMode = ref(false);

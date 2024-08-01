@@ -344,7 +344,7 @@ async function filterByType(type) {
   loadedPokemonNames.clear();
   pokemons.value = [];
   currentFilter.value = type;
-  console.log("currentFilter:", currentFilter.value); //콘솔에 currentFilter 출력
+  // console.log("currentFilter:", currentFilter.value); //콘솔에 currentFilter 출력
   removeEndOfListMessage();
   clearSearchResultCount();
   morePokemonsAvailable.value = true;
@@ -380,7 +380,7 @@ function handleScroll() {
 }
 //json 불러오기
 async function loadPokemonNames() {
-  const response = await fetch("/src/assets/poke_details_data.json");
+  const response = await fetch("/pokemon/src/assets/poke_details_data.json");
   const pokemonNames = await response.json();
   allPokemonNames.value = pokemonNames;
   // console.log("Loaded Pokemon Names:", allPokemonNames.value); // 콘솔에 로드된 데이터 출력
@@ -394,7 +394,7 @@ function detectLanguage() {
     return;
   }
   const language = getLanguageType(query);
-  console.log(`Detected language: ${language}`);
+  // console.log(`Detected language: ${language}`);
   // 언어가 unknown이거나 query가 숫자일 경우 showTooltip을 true로 설정
   showTooltip.value = language === "unknown" || language === "number";
 }

@@ -1,10 +1,10 @@
 <template>
   <v-card>
     <v-card-title>
-      포켓몬 상세 정보
       <v-btn icon variant="text" @click="$emit('close')">
         <v-icon>mdi-close</v-icon>
       </v-btn>
+      포켓몬 상세 정보
     </v-card-title>
     <v-card-text>
       <img :src="pokemon.sprite" alt="Pokemon Image" class="pokemon-image" />
@@ -74,7 +74,7 @@ onMounted(() => {
   background-color: transparent;
 }
 .pokemon-image {
-  width: 100px;
+  width: 160px;
   height: auto;
 }
 </style>

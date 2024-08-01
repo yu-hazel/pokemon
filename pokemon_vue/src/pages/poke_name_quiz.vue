@@ -141,13 +141,6 @@
 //   }
 // }
 
-// // 현재 질문 재시도
-// function retryQuestion() {
-//   answer.value = "";
-//   resultMessages.value = [];
-//   answerChecked.value = false; // 정답 체크 상태 초기화
-// }
-
 // // 다음 질문
 // function nextQuestion() {
 //   if (currentQuestion.value < questions.value.length - 1) {
@@ -200,7 +193,7 @@ const isCorrect = ref(false); // 정답 여부
 // JSON 데이터 가져오기
 onMounted(async () => {
   try {
-    const response = await fetch("/src/assets/pokemon_game_data.json");
+    const response = await fetch("/pokemon/src/assets/pokemon_game_data.json");
     const data = await response.json();
     questions.value = data.sort(() => 0.5 - Math.random()).slice(0, 10);
     displayQuestion();
@@ -256,6 +249,13 @@ function checkAnswer() {
       isCorrect: isCorrect.value,
     });
   }
+}
+
+// 현재 질문 재시도
+function retryQuestion() {
+  answer.value = "";
+  resultMessages.value = [];
+  answerChecked.value = false; // 정답 체크 상태 초기화
 }
 
 // 다음 질문
