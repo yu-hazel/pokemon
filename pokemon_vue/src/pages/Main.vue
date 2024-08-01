@@ -380,7 +380,7 @@ function handleScroll() {
 }
 //json 불러오기
 async function loadPokemonNames() {
-  const response = await fetch("/pokemon/src/assets/poke_details_data.json");
+  const response = await fetch("./src/assets/poke_details_data.json");
   const pokemonNames = await response.json();
   allPokemonNames.value = pokemonNames;
   // console.log("Loaded Pokemon Names:", allPokemonNames.value); // 콘솔에 로드된 데이터 출력
