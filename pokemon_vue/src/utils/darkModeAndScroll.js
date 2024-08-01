@@ -24,8 +24,8 @@ function setupDarkModeToggle() {
 
 
     // 이미지 다크모드 토글
-    toggleImage('lang', '/src/assets/img/lang.png', '/src/assets/img/lang_dark.png');
-    toggleImage('login', '/src/assets/img/login.png', '/src/assets/img/login_dark.png');
+    toggleImage('lang', '/pokemon/src/assets/img/lang.png', '/pokemon/src/assets/img/lang_dark.png');
+    toggleImage('login', '/pokemon/src/assets/img/login.png', '/pokemon/src/assets/img/login_dark.png');
 
     // 검색 버튼 이미지 토글
     const searchBt = document.getElementById('searchBt');
