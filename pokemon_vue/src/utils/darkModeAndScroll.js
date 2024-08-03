@@ -9,12 +9,12 @@ function toggleClass(selector, className) {
   });
 }
 
-// 이미지 토글 함수
-function toggleImage(elementId, lightSrc, darkSrc) {
-  const img = document.getElementById(elementId);
-  img.src = img.src.includes(lightSrc) ? darkSrc : lightSrc;
-  // console.log('Image element:', img); // 콘솔에 이미지 태그 출력
-}
+// // 이미지 토글 함수
+// function toggleImage(elementId, lightSrc, darkSrc) {
+//   const img = document.getElementById(elementId);
+//   img.src = img.src.includes(lightSrc) ? darkSrc : lightSrc;
+//   // console.log('Image element:', img); // 콘솔에 이미지 태그 출력
+// }
 
 
 // 라이트, 다크모드 버튼 토글
@@ -23,9 +23,9 @@ function setupDarkModeToggle() {
     document.body.classList.toggle('darkMode');
 
 
-    // 이미지 다크모드 토글
-    toggleImage('lang', `@/assets/img/lang.png`, '@/assets/img/lang_dark.png');
-    toggleImage('login', '@/assets/img/login.png', '@/assets/img/login_dark.png');
+    // // 이미지 다크모드 토글
+    // toggleImage('lang', `@/assets/img/lang.png`, '@/assets/img/lang_dark.png');
+    // toggleImage('login', '@/assets/img/login.png', '@/assets/img/login_dark.png');
 
     // 검색 버튼 이미지 토글
     const searchBt = document.getElementById('searchBt');

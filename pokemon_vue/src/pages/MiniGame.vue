@@ -10,18 +10,6 @@
         </section>
         <i class="nes-charmander"></i>
       </div>
-      <!-- <div v-if="isDarkMode" class="gameSetDark">
-        <img src="@/assets/img/game_minimi_dark.png" alt="오락기" />
-        <img src="@/assets/img/game_minimi_dark.png" alt="오락기" />
-        <img src="@/assets/img/game_minimi_dark.png" alt="오락기" />
-        <img src="@/assets/img/game_minimi_dark.png" alt="오락기" />
-      </div>
-      <div v-else class="gameSet">
-        <img src="@/assets/img/game_minimi.png" alt="오락기" />
-        <img src="@/assets/img/game_minimi.png" alt="오락기" />
-        <img src="@/assets/img/game_minimi.png" alt="오락기" />
-        <img src="@/assets/img/game_minimi.png" alt="오락기" />
-      </div> -->
       <div class="gameBoxSet">
         <router-link to="/minigame/namequiz">
           <div class="gameCon nes-container is-rounded">
