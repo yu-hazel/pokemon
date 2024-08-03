@@ -84,6 +84,7 @@ import { ref, onMounted, watch, nextTick } from "vue";
 import { usePokemonStore } from "@/stores/pokemonStore";
 import { typeColors, darkTypeColors } from "@/utils/back_color.js";
 import highlightWord from "@/components/main_highlight_word.vue";
+import pokeDetails from "@/data/poke_details_data.json";
 
 //모달
 const isModalOpen = ref(false);
@@ -380,9 +381,7 @@ function handleScroll() {
 }
 //json 불러오기
 async function loadPokemonNames() {
-  const response = await fetch("./src/assets/poke_details_data.json");
-  const pokemonNames = await response.json();
-  allPokemonNames.value = pokemonNames;
+  allPokemonNames.value = pokeDetails;
   // console.log("Loaded Pokemon Names:", allPokemonNames.value); // 콘솔에 로드된 데이터 출력
 }
 

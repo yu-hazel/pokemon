@@ -176,6 +176,7 @@
 //   }
 // });
 import { ref, onMounted, watch } from "vue";
+import pokeData from "@/data/pokemon_game_data.json";
 
 const quizResults = ref([]); // 각 질문의 결과를 저장
 
@@ -193,9 +194,8 @@ const isCorrect = ref(false); // 정답 여부
 // JSON 데이터 가져오기
 onMounted(async () => {
   try {
-    const response = await fetch("/pokemon/src/assets/pokemon_game_data.json");
-    const data = await response.json();
-    questions.value = data.sort(() => 0.5 - Math.random()).slice(0, 10);
+    questions.value = pokeData.sort(() => 0.5 - Math.random()).slice(0, 10);
+    // console.log(questions.value);
     displayQuestion();
   } catch (error) {
     console.error("Error fetching data:", error);

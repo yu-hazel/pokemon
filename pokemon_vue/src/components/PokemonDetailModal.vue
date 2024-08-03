@@ -44,7 +44,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { usePokemonStore } from "@/stores/pokemonStore";
-import pokemonData from "@/assets/poke_details_data.json"; // JSON 데이터 가져오기
+import pokemonData from "@/data/poke_details_data.json"; // JSON 데이터 가져오기
 
 const props = defineProps({
   id: {
