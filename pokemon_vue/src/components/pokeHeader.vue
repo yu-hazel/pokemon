@@ -9,12 +9,12 @@
         </div>
         <div class="userMenu">
           <p class="langText" @mouseover="showUpdateNotice" @mouseout="hideUpdateNotice">
-            <img src="@/assets/img//lang.png" alt id="lang" />한국어
+            <img src="@/assets/img/lang.png" alt id="lang" />한국어
           </p>
           <span class="updateNotice" v-show="isUpdateNoticeVisible">현재는 한국어만 지원됩니다. 추후 일본어 영어 지원 예정!</span>
-          <p class="login"><img src="@/assets/img//login.png" alt id="login" />로그인</p>
+          <p class="login"><img src="@/assets/img/login.png" alt id="login" />로그인</p>
         </div>
-        <img id="monsterBall" src="@/assets/img//monster_ball.png" alt @click.stop="toggleMenu" />
+        <img id="monsterBall" src="@/assets/img/monster_ball.png" alt @click.stop="toggleMenu" />
       </div>
       <div id="lightDarkToggle">light, dark mode toggle</div>
     </header>
