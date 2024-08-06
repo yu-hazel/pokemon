@@ -14,17 +14,18 @@ API 활용, 퍼블리싱, 게임 구현에 중점을 두었습니다. <br>
 ## 개요
 - 프로젝트명 : 우리만의 포켓몬 도감
 - 프로젝트 진행 기간 : 2024.06.10 ~ 2024.07.16
-- [배포 주소](https://yoo-nji.github.io/pokemon/)
+- [배포 주소(ver.2 : Vite + Vue3)](https://yoo-nji.github.io/pokemon/)
+- [배포 주소(ver.1 : HTML)](https://yoo-nji.github.io/pokemon/html/pokemon_main.html)
 
 <br>
 
 ## 팀원 소개
-|  | 권윤지 (Leader) | 유혜인 |
-| --- | --- | --- |
-| **Profile** | <img src="https://github.com/user-attachments/assets/2fd07733-8316-4c97-8f4e-fd66c0e82fb6" width="150" height="150"> | <img src="https://github.com/user-attachments/assets/b5a24df4-177b-4fde-a5a8-a54d04570032" width="150" height="150"> |
-| **GitHub** | [@yoo-nji](https://github.com/yoo-nji) | [@yu-hazel](https://github.com/yu-hazel) |
-| **Role** | PM, Frontend Developer | Publisher |
-| **Responsibilities** | - 프로젝트 기획 <br> - 프론트엔드 기술 담당 <br> - 포켓몬 이름 퀴즈 게임 | - 퍼블리싱 작업 <br> - 카드 짝맞추기 게임 |
+| 권윤지 | 유혜인 |
+| --- | --- |
+| <img src="https://github.com/user-attachments/assets/2fd07733-8316-4c97-8f4e-fd66c0e82fb6" width="150" height="150"> | <img src="https://github.com/user-attachments/assets/b5a24df4-177b-4fde-a5a8-a54d04570032" width="150" height="150"> |
+| [@yoo-nji](https://github.com/yoo-nji) | [@yu-hazel](https://github.com/yu-hazel) |
+| PM, Frontend Developer | Publisher |
+| - 프로젝트 기획 <br> - 프론트엔드 기술 담당 <br> - 포켓몬 이름 퀴즈 게임 | - 퍼블리싱 작업 <br> - 카드 짝맞추기 게임(+Vue) |
 
 <br>
 
@@ -47,7 +48,7 @@ API 활용, 퍼블리싱, 게임 구현에 중점을 두었습니다. <br>
 
 <br>
 
-## 구현 페이지 및 기능
+## 구현 페이지 및 기능 (
 
 ![poke01](https://github.com/user-attachments/assets/f349ebaa-994d-44c4-a916-35ebc5e09873) | ![다크모드](https://github.com/user-attachments/assets/49f2f8b5-a5b6-4adf-aa3c-6094ff099b1c)
 | :---: | :---: |
