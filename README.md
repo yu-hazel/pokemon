@@ -48,7 +48,7 @@ API 활용, 퍼블리싱, 게임 구현에 중점을 두었습니다. <br>
 
 <br>
 
-## 구현 페이지 및 기능 (
+## 구현 페이지 및 기능
 
 ![poke01](https://github.com/user-attachments/assets/f349ebaa-994d-44c4-a916-35ebc5e09873) | ![다크모드](https://github.com/user-attachments/assets/49f2f8b5-a5b6-4adf-aa3c-6094ff099b1c)
 | :---: | :---: |
